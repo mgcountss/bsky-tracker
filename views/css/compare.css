@@ -1,9 +1,8 @@
 body {
-    background-color: #141414;
+    background-color: #141515;
     margin: 0;
     padding: 0;
     font-family: Tahoma, Arial, Helvetica, sans-serif;
-    margin: 0px;
     color: #FFF;
 }
 
@@ -11,9 +10,8 @@ body {
     width: 7rem;
     height: 7rem;
     border-radius: 10%;
-    margin: 0 auto;
-    border: solid #ccc 2px;
-    margin: 1rem;
+    margin: 1rem auto;
+    border: 2px solid #ccc;
     text-align: left;
 }
 
@@ -23,29 +21,28 @@ body {
     display: none;
 }
 
-.topRow {
+.topRow, .topRowContainer, .smallStats {
     width: 90%;
     background-color: #0f0f0f;
+}
+
+.topRow {
     text-align: center;
 }
 
 .topRowContainer {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
 }
 
 .leftTopRow {
     display: flex;
 }
 
-#title {
+#title, #title1, #title2 {
     color: #46e4a2;
-    margin-bottom: 0px;
-}
-
-.smallStats {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 0;
 }
 
 .smallStats h3 {
@@ -55,27 +52,30 @@ body {
 .mainStats {
     display: flex;
     justify-content: space-around;
-    margin-top: 0rem;
+    margin-top: 0;
 }
 
-h3 {
+.main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+    gap: 5rem;
+}
+
+h2, h3 {
     font-size: 1.5rem;
     color: #ccc;
-    margin-bottom: 0px;
-    margin-top: 0px;
+    margin: 0;
 }
 
 h2 {
     font-size: 2rem;
-    color: #ccc;
-    margin-top: 0.5rem;
-    margin-bottom: 0px;
 }
 
 a {
     color: #46e4a2;
     text-decoration: none;
-    font-size: 0.75rem;
+    font-size: .75rem;
 }
 
 a:hover {
@@ -92,23 +92,19 @@ a:hover {
     color: #141414;
     border: none;
     border-radius: 5px;
-    padding: 0.5rem;
+    padding: .5rem;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .odometer {
     font-size: 3.5rem;
-    margin-top: 0px;
+    margin-top: 0;
 }
 
 .bio {
     text-align: left;
-    padding-left: 0.5rem;
-}
-
-#live_name {
-    margin-bottom: 0px;
+    padding-left: .5rem;
 }
 
 table {
@@ -117,11 +113,16 @@ table {
     margin-top: 1rem;
 }
 
+th, td {
+    padding: .5rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
 th {
     background-color: #0f0f0f;
     color: #46e4a2;
     font-size: 1.5rem;
-    border-top: 1px solid #333;
 }
 
 td {
@@ -134,31 +135,12 @@ tr:nth-child(even) {
     background-color: #1f1f1f;
 }
 
-tr:nth-child(odd) {
-    background-color: #0f0f0f;
-}
-
-th, td {
-    padding: 0.5rem;
-    text-align: left;
-    border-bottom: 1px solid #333;
-}
-
-#title1, #title2 {
-    color: #46e4a2;
-    margin-bottom: 0rem;
-}
-
-#total {
-    visibility: hidden;
-}
-
 #viewUploads {
     background-color: #0f0f0f;
     color: #46e4a2;
     border: 1px solid #46e4a2;
-    padding: 0.5rem;
-    margin-top: 0rem;
+    padding: .5rem;
+    margin-top: 0;
     text-align: center;
     width: 50%;
     cursor: pointer;
@@ -191,52 +173,28 @@ th, td {
 }
 
 @media screen and (max-width: 600px) {
-    .topRow {
+    .topRow, .leftTopRow {
         flex-direction: column;
         height: 50rem;
-    }
-
-    .leftTopRow {
-        flex-direction: column;
         text-align: center;
     }
 
     .smallStats {
         grid-template-columns: 1fr;
-        margin-top: 0px;
+        margin-top: 0;
     }
 
     #avatar {
         text-align: center;
-        justify-content: center;
         margin: 0 auto;
     }
 
-    a {
-        font-size: 0.5rem;
+    a, h3, .mainStats h3 {
+        font-size: .5rem;
     }
 
-    h3 {
-        font-size: 0.5rem;
-        margin-top: 0px;
-        margin-bottom: 0px;
-    }
-
-    h2 {
+    h2, .mainStats h2 {
         font-size: 1rem;
-    }
-
-    .leftTopRow h3 {
-        font-size: 1rem;
-    }
-
-    .mainStats h3 {
-        font-size: 0.5rem;
-    }
-
-    .mainStats h2 {
-        font-size: 1rem;
-        margin-top: 0px;
     }
 
     .topRowContainer {
@@ -245,12 +203,11 @@ th, td {
 
     #title {
         font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-        margin-top: 0.5rem;
+        margin: .5rem 0;
     }
 
     .bio {
-        margin-top: 0.5rem;
+        margin-top: .5rem;
     }
 
     table, tbody, th, td {
@@ -258,30 +215,185 @@ th, td {
     }
 
     th {
-        font-size: 0.7rem;
+        font-size: .7rem;
     }
 
     td {
         font-size: 1rem;
     }
 
-    .charts {
-        display: block;
-    }
-
-    .grid {
+    .charts, .grid {
         display: block;
     }
 
     #viewUploads {
         width: 100%;
     }
-    
+
     .date {
         font-size: 1rem;
     }
 
     .mainStats .count {
         font-size: 1.5rem;
+    }
+}
+
+#searchBar1, #searchBar2 {
+    background: url(/images/search.png) no-repeat 10px center;
+    background-size: 2rem;
+    width: 100%;
+    height: 3rem;
+    font-size: 1.25rem;
+    padding: .5rem;
+    border-radius: .5rem;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    padding-left: 3.5rem;
+    color: #FFF;
+    border: none;
+    background-color: #242525;
+}
+
+#searchButton1, #searchButton2 {
+    background-color: #242525;
+    color: #FFF;
+    border: none;
+    padding: .5rem;
+    border-radius: .25rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 50%;
+}
+
+.disabled {
+    background-color: #000;
+    color: #FFF;
+    border: none;
+    padding: .5rem;
+    border-radius: .25rem;
+    font-size: 1.5rem;
+    cursor: not-allowed;
+}
+
+.results {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+    margin-top: 1rem;
+}
+
+.result {
+    width: 100%;
+    height: 8rem;
+    position: relative;
+    cursor: pointer;
+}
+
+.background-image {
+    background-color: #242525;
+    padding: 1rem;
+    border-radius: .5rem;
+    cursor: pointer;
+    height: 8rem;
+    width: 100%;
+    position: relative;
+}
+
+.overlay {
+    background-color: #000000bf;
+    position: absolute;
+    width: 100%;
+    height: 8rem;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    border-radius: .5rem;
+    z-index: 10;
+    font-size: calc(0.5rem + 0.5vw);
+}
+
+.overlay:before {
+    content: "";
+    position: absolute;
+    top: 1rem;
+    border-radius: .5rem;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.overlay-label {
+    z-index: 10;
+    position: relative;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+.pfp {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+}
+
+div.overlay > h1 {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    display: none;
+}
+
+#compareButton {
+    color: #FFF;
+    border: none;
+    padding: .5rem;
+    border-radius: .1rem;
+    font-size: 3rem;
+    cursor: pointer;
+    width: 50%;
+    margin-top: 1rem;
+    border: solid #FFF .1rem;
+    background-color: #141414;
+}
+
+#compareButton:hover, #searchButton1:hover, #searchButton2:hover {
+    background-color: #000;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media screen and (max-width: 800px) {
+    .main {
+        grid-template-columns: 1fr;
+    }
+
+    .side1, .side2 {
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .results {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .result {
+        width: 100%;
     }
 }

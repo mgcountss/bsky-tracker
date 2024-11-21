@@ -9,7 +9,7 @@ function setError2(error) {
     document.getElementById('loading2').style.display = 'none';
 }
 
-function search1() {
+function search1(force) {
     document.getElementById('results1').innerHTML = '';
     document.getElementById('loading1').style.display = 'block';
     fetch('/api/search', {
@@ -42,6 +42,9 @@ function search1() {
                     </div>
                     </div>`;
                     document.getElementById('results1').appendChild(div);
+                    if (channel.handle == force) {
+                        selectChannel1('u1' + channel.did);
+                    }
                 }
                 document.getElementById('loading1').style.display = 'none';
                 document.getElementById('error1').style.display = 'none';
@@ -156,3 +159,8 @@ document.getElementById('compareButton').addEventListener('click', function () {
     }
     window.location.href = `/compare/${selected[0].substring(2)}/${selected[1].substring(2)}`;
 });
+
+if (window.location.href.includes('start')) {
+    document.getElementById('searchBar1').value = window.location.href.split('start=')[1]
+    search1(window.location.href.split('start=')[1]);
+}
