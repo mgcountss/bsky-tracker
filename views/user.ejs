@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('partials/meta') %>
+
+<body>
+  <%- include('partials/navbar') %>
+    <center><br>
+      <div class="topRow">
+        <div class="topRowContainer">
+          <div class="leftTopRow">
+            <img src="<%= user.avatar %>" id="avatar">
+            <div>
+              <h1 id="title">
+                <%= user.displayName.length > 0 ? user.displayName : '@'+user.handle %>
+              </h1>
+              <h3>@<%= user.handle %>
+              </h3>
+              <div class="bio">
+                <%=user.description%>
+              </div>
+            </div>
+          </div>
+          <div class="smallStats">
+            <div>
+              <h3>Joined:</h3>
+                <h2>
+                  <%= moment(user.createdAt).format('MMMM Do, YYYY [at] h:mm:ss a') %>
+                </h2>
+            </div>
+          </div>
+        </div>
+        <hr>
+        <div class="mainStats">
+          <div>
+            <h2>
+              <%= (user.followersCount).toLocaleString('en-us') %>
+            </h2>
+            <h3>Followers</h3>
+            <a href="?live=followersCount">View Live Updates</a>
+          </div>
+          <div>
+            <h2>
+              <%= (user.postsCount).toLocaleString('en-us') %>
+            </h2>
+            <h3>Posts</h3>
+            <a href="?live=postsCount">View Live Updates</a>
+          </div>
+          <div>
+            <h2>
+              <%= (user.followsCount).toLocaleString('en-us') %>
+            </h2>
+            <h3>Following</h3>
+            <a href="?live=followsCount">View Live Updates</a>
+          </div>
+        </div>
+        <hr>
+        <div id="liveCounter">
+          <h1 id="live_name">{name}</h1>
+          <h2 class="odometer" id="live_count">{count}</h2>
+          <h3 id="live_label">{label}</h3>
+          <div id="chart"></div>
+          <hr><button id="liveButton" onclick="toggleLive()">Disable Live Updates</button>
+        </div>
+        <div class="charts">
+          <div class="chart" id="stats_chart1"></div>
+          <div class="chart" id="stats_chart2"></div>
+          <div class="chart" id="stats_chart3"></div>
+        </div>
+        <table>
+          <tr>
+            <th>Date</th>
+            <th>Followers</th>
+            <th>Posts</th>
+            <th>Following</th>
+          </tr>
+          <% for (let date in history) { %>
+            <tr>
+              <td>
+                <%= moment(date, 'DD-MM-YYYY').format('MMMM Do, YYYY') %>
+              </td>
+              <td>
+                <%= (history[date].followersCount).toLocaleString('en-us') %>
+              </td>
+              <td>
+                <%= (history[date].postsCount).toLocaleString('en-us') %>
+              </td>
+              <td>
+                <%= (history[date].followsCount).toLocaleString('en-us') %>
+              </td>
+            </tr>
+            <% } %>
+        </table>
+      </div>
+    </center>
+    <script>
+      let daily_stats = "<%= JSON.stringify(history) %>";
+      daily_stats = daily_stats.replace(/&#34;/g, '"');
+      daily_stats = JSON.parse(daily_stats);
+    </script>
+    <script src="/js/highstock.js"></script>
+    <script src="/js/user.js"></script>
+    <script src="/js/odometer.js"></script>
+</body>
+
+</html>

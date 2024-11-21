@@ -1,0 +1,158 @@
+
+<% if (url == "index") { %>
+    <head>
+        <%- include('constants') %>
+        <% description = "The best site for tracking user statistics and follower counts on bsky.app!" %>
+        <% title = "Bluesky Tracker" %>
+        <% link = "https://bluesky.mgcounts.com" %>
+    
+        <title><%= title %></title>
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="<%= title %>">
+        <meta property="og:site_name" content="Bluesky Tracker">
+        <meta property="og:description" content="<%= description %>">
+        <meta property="og:url" content="<%= link %>">
+        <meta property="og:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Twitter -->
+        <meta name="twitter:title" content="<%= title %>">
+        <meta name="twitter:description" content="<%= description %>">
+        <meta name="twitter:url" content="<%= link %>">
+        <meta name="twitter:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/css/index.css">
+    </head>
+    <% } else if (url.includes("user") && !url.includes("list")) { %>
+    <head>
+        <%- include('constants') %>
+        <% description = "Track @"+user.handle+"'s statistics and live follower count on bsky.app via Bluesky Tracker!" %>
+        <% title = "Tracking: @"+user.handle+"'s statistics and live follower count on Bluesky Tracker" %>
+        <% link = "https://bluesky.mgcounts.com/"+url %>
+    
+        <title><%= title %></title>
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="<%= title %>">
+        <meta property="og:site_name" content="Bluesky Tracker">
+        <meta property="og:description" content="<%= description %>">
+        <meta property="og:url" content="<%= link %>">
+        <meta property="og:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Twitter -->
+        <meta name="twitter:title" content="<%= title %>">
+        <meta name="twitter:description" content="<%= description %>">
+        <meta name="twitter:url" content="<%= link %>">
+        <meta name="twitter:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/css/<%= url.split('/')[0] %>.css">
+    </head>
+    <% } else if (url.includes("list")) { %>
+    <head>
+        <%- include('constants') %>
+        <% thing = url.includes("posts") ? "Posts" : "Users" %>
+        <% description = "Track the top "+thing.toLowerCase()+" on bsky.app via Bluesky Tracker!" %>
+        <% title = "Tracking: Top "+thing+" on bsky.app via Bluesky Tracker" %>
+        <% link = "https://bluesky.mgcounts.com/"+url %>
+    
+        <title><%= title %></title>
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="<%= title %>">
+        <meta property="og:site_name" content="Bluesky Tracker">
+        <meta property="og:description" content="<%= description %>">
+        <meta property="og:url" content="<%= link %>">
+        <meta property="og:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Twitter -->
+        <meta name="twitter:title" content="<%= title %>">
+        <meta name="twitter:description" content="<%= description %>">
+        <meta name="twitter:url" content="<%= link %>">
+        <meta name="twitter:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/css/list.css">
+    </head>
+    <% } else if (url.includes("search") && url.includes("compare")) { %>
+    <head>
+        <%- include('constants') %>
+        <% description = "Compare two users on bsky.app via Bluesky Tracker!" %>
+        <% title = "Searching For Two Users To Compare On bsky.app via Bluesky Tracker" %>
+        <% link = "https://bluesky.mgcounts.com/"+url %>
+    
+        <title><%= title %></title>
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="<%= title %>">
+        <meta property="og:site_name" content="Bluesky Tracker">
+        <meta property="og:description" content="<%= description %>">
+        <meta property="og:url" content="<%= link %>">
+        <meta property="og:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Twitter -->
+        <meta name="twitter:title" content="<%= title %>">
+        <meta name="twitter:description" content="<%= description %>">
+        <meta name="twitter:url" content="<%= link %>">
+        <meta name="twitter:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/css/compare_search.css">
+    </head>
+    <% } else if (url.includes("compare")) { %>
+    <head>
+        <%- include('constants') %>
+        <% description = "Comparing @"+user1.username+" and @"+user2.username+"'s statistics on bsky.app via Bluesky Tracker!" %>
+        <% title = "Comparing: @"+user1.username+" and @"+user2.username+"'s statistics on Bluesky Tracker" %>
+        <% link = "https://bluesky.mgcounts.com/"+url %>
+    
+        <title><%= title %></title>
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="<%= title %>">
+        <meta property="og:site_name" content="Bluesky Tracker">
+        <meta property="og:description" content="<%= description %>">
+        <meta property="og:url" content="<%= link %>">
+        <meta property="og:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Twitter -->
+        <meta name="twitter:title" content="<%= title %>">
+        <meta name="twitter:description" content="<%= description %>">
+        <meta name="twitter:url" content="<%= link %>">
+        <meta name="twitter:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/css/compare.css">
+    </head>
+    <% } else { %>
+    <head>
+        <%- include('constants') %>
+        <% title = "Error: Page Not Found" %>
+        <% description = "The page you are looking for does not exist on bsky.app via Bluesky Tracker!" %>
+        <% link = "https://bluesky.mgcounts.com/"+url %>
+    
+        <title><%= title %></title>
+        
+        <!-- Open Graph / Facebook -->
+        <meta property="og:title" content="<%= title %>">
+        <meta property="og:site_name" content="Bluesky Tracker">
+        <meta property="og:description" content="<%= description %>">
+        <meta property="og:url" content="<%= link %>">
+        <meta property="og:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Twitter -->
+        <meta name="twitter:title" content="<%= title %>">
+        <meta name="twitter:description" content="<%= description %>">
+        <meta name="twitter:url" content="<%= link %>">
+        <meta name="twitter:image" content="https://bluesky.mgcounts.com/images/logo.png">
+    
+        <!-- Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="/css/index.css">
+        <style>
+            #title {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <% } %>

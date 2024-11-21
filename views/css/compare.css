@@ -1,0 +1,287 @@
+body {
+    background-color: #141414;
+    margin: 0;
+    padding: 0;
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    margin: 0px;
+    color: #FFF;
+}
+
+#avatar {
+    width: 7rem;
+    height: 7rem;
+    border-radius: 10%;
+    margin: 0 auto;
+    border: solid #ccc 2px;
+    margin: 1rem;
+    text-align: left;
+}
+
+#diff {
+    background-color: #0f0f0f;
+    width: 50%;
+    display: none;
+}
+
+.topRow {
+    width: 90%;
+    background-color: #0f0f0f;
+    text-align: center;
+}
+
+.topRowContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.leftTopRow {
+    display: flex;
+}
+
+#title {
+    color: #46e4a2;
+    margin-bottom: 0px;
+}
+
+.smallStats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.smallStats h3 {
+    margin-top: 2rem;
+}
+
+.mainStats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 0rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: #ccc;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #ccc;
+    margin-top: 0.5rem;
+    margin-bottom: 0px;
+}
+
+a {
+    color: #46e4a2;
+    text-decoration: none;
+    font-size: 0.75rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#liveCounter1, #liveCounter2 {
+    display: none;
+    color: #46e4a2;
+}
+
+#liveButton {
+    background-color: #46e4a2;
+    color: #141414;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.odometer {
+    font-size: 3.5rem;
+    margin-top: 0px;
+}
+
+.bio {
+    text-align: left;
+    padding-left: 0.5rem;
+}
+
+#live_name {
+    margin-bottom: 0px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+th {
+    background-color: #0f0f0f;
+    color: #46e4a2;
+    font-size: 1.5rem;
+    border-top: 1px solid #333;
+}
+
+td {
+    background-color: #0f0f0f;
+    color: #ccc;
+    font-size: 1.5rem;
+}
+
+tr:nth-child(even) {
+    background-color: #1f1f1f;
+}
+
+tr:nth-child(odd) {
+    background-color: #0f0f0f;
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+#title1, #title2 {
+    color: #46e4a2;
+    margin-bottom: 0rem;
+}
+
+#total {
+    visibility: hidden;
+}
+
+#viewUploads {
+    background-color: #0f0f0f;
+    color: #46e4a2;
+    border: 1px solid #46e4a2;
+    padding: 0.5rem;
+    margin-top: 0rem;
+    text-align: center;
+    width: 50%;
+    cursor: pointer;
+}
+
+#viewUploads:hover {
+    background-color: #46e4a2;
+    color: #0f0f0f;
+}
+
+.charts {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+
+.chart {
+    border: 1px solid #333;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-top: 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+}
+
+@media screen and (max-width: 600px) {
+    .topRow {
+        flex-direction: column;
+        height: 50rem;
+    }
+
+    .leftTopRow {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .smallStats {
+        grid-template-columns: 1fr;
+        margin-top: 0px;
+    }
+
+    #avatar {
+        text-align: center;
+        justify-content: center;
+        margin: 0 auto;
+    }
+
+    a {
+        font-size: 0.5rem;
+    }
+
+    h3 {
+        font-size: 0.5rem;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    h2 {
+        font-size: 1rem;
+    }
+
+    .leftTopRow h3 {
+        font-size: 1rem;
+    }
+
+    .mainStats h3 {
+        font-size: 0.5rem;
+    }
+
+    .mainStats h2 {
+        font-size: 1rem;
+        margin-top: 0px;
+    }
+
+    .topRowContainer {
+        display: block;
+    }
+
+    #title {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .bio {
+        margin-top: 0.5rem;
+    }
+
+    table, tbody, th, td {
+        width: 70%;
+    }
+
+    th {
+        font-size: 0.7rem;
+    }
+
+    td {
+        font-size: 1rem;
+    }
+
+    .charts {
+        display: block;
+    }
+
+    .grid {
+        display: block;
+    }
+
+    #viewUploads {
+        width: 100%;
+    }
+    
+    .date {
+        font-size: 1rem;
+    }
+
+    .mainStats .count {
+        font-size: 1.5rem;
+    }
+}

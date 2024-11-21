@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<%- include('partials/meta', {url: url}) %>
+
+<body>
+  <%- include('partials/navbar') %>
+    <center>
+      <button id="compareButton">Compare Users!</button>
+      <div class="main">
+        <div class="side1">
+          <div class="search">
+            <input placeholder="Search for a user!" type="text" id="searchBar1" autocomplete="off"
+              aria-autocomplete="none">
+            <br><br><button id="searchButton1">Search!</button>
+          </div>
+          <div class="results" id="results1"></div>
+          <div class="error" id="error1"></div>
+          <div class="loader" id="loading1"></div><br>
+        </div>
+        <div class="side2">
+          <div class="search">
+            <input placeholder="Search for a user!" type="text" id="searchBar2" autocomplete="off" aria-autocomplete="none">
+            <br><br><button id="searchButton2">Search!</button>
+          </div>
+          <div class="results" id="results2"></div>
+          <div class="error" id="error2"></div>
+          <div class="loader" id="loading2"></div><br>
+        </div>
+      </div>
+      <script src="/js/moment.js"></script>
+      <script src="/js/compare_search.js"></script>
+</body>
+
+</html>
