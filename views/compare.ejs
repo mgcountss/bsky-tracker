@@ -22,9 +22,9 @@
               <div class="smallStats">
                 <div>
                   <h3 class="date">Joined:</h3>
-                    <h3 style="margin-top: 0px" class="date">
-                      <%= moment(user1.createdAt).format('MMMM Do, YYYY [at] h:mm:ss a') %>
-                    </h3>
+                  <h3 style="margin-top: 0px" class="date">
+                    <%= moment(user1.createdAt).format('MMMM Do, YYYY [at] h:mm:ss a') %>
+                  </h3>
                 </div>
               </div>
             </div>
@@ -57,7 +57,12 @@
               </div>
             </div>
             <hr>
-            <button id="viewUploads" onclick="window.location.href='/user/<%= user1.did %>'">View Profile</button>
+            <center>
+              <div style="display: flex; justify-content: center; width: 75%;">
+                <button id="viewUploads" onclick="window.location.href='/compare/search?start=<%= user1.handle %>'">Compare With</button>
+                <button id="viewUploads" onclick="window.location.href='/user/<%= user1.did %>'">View Profile</button>
+              </div>
+            </center>
             <div id="liveCounter1">
               <h1 id="live_name1">{name}</h1>
               <h2 class="odometer" id="live_count1">{count}</h2>
@@ -80,9 +85,9 @@
               <div class="smallStats">
                 <div>
                   <h3 class="date">Joined:</h3>
-                    <h3 style="margin-top: 0px;" class="date">
-                      <%= moment(user2.createdAt).format('MMMM Do, YYYY [at] h:mm:ss a') %>
-                    </h3>
+                  <h3 style="margin-top: 0px;" class="date">
+                    <%= moment(user2.createdAt).format('MMMM Do, YYYY [at] h:mm:ss a') %>
+                  </h3>
                 </div>
               </div>
             </div>
@@ -115,13 +120,18 @@
               </div>
             </div>
             <hr>
-            <button id="viewUploads" onclick="window.location.href='/user/<%= user2.did %>'">View Profile</button>
+            <center>
+              <div style="display: flex; justify-content: center; width: 75%;">
+                <button id="viewUploads" onclick="window.location.href='/user/<%= user2.did %>'">View Profile</button>
+                <button id="viewUploads" onclick="window.location.href='/compare/search?start=<%= user2.handle %>'">Compare With</button>
+              </div>
+            </center>
             <div id="liveCounter2">
               <h1 id="live_name2">{name}</h1>
               <h2 class="odometer" id="live_count2">{count}</h2>
               <h3 id="live_label2">{label}</h3>
               <div id="chart2"></div>
-              </div>
+            </div>
           </div>
         </div>
         <div id="diff">
@@ -159,46 +169,46 @@
             </th>
           </tr>
           <% var dates=Object.keys(history1); %>
-          <% for (let date in history2) { %>
-            <% if (!dates.includes(date)) { dates.push(date); }}; dates.sort(); %>
-              <% for (let date of dates) { %>
-                <tr>
-                  <td>
-                    <%= moment(date, 'DD-MM-YYYY').format('MMMM Do, YYYY') %>
-                  </td>
-                  <td>
-                    <% if (history1[date]) { %>
-                      <%= (history1[date].followersCount).toLocaleString('en-us') %>
-                        <% } %>
-                  </td>
-                  <td>
-                    <% if (history1[date]) { %>
-                      <%= (history1[date].postsCount).toLocaleString('en-us') %>
-                        <% } %>
-                  </td>
-                  <td>
-                    <% if (history1[date]) { %>
-                      <%= (history1[date].followsCount).toLocaleString('en-us') %>
-                        <% } %>
-                  </td>
-                  <th>|</th>
-                  <td>
-                    <% if (history2[date]) { %>
-                      <%= (history2[date].followersCount).toLocaleString('en-us') %>
-                        <% } %>
-                  </td>
-                  <td>
-                    <% if (history2[date]) { %>
-                      <%= (history2[date].postsCount).toLocaleString('en-us') %>
-                        <% } %>
-                  </td>
-                  <td>
-                    <% if (history2[date]) { %>
-                    <%= (history2[date].followsCount).toLocaleString('en-us') %>
-                      <% } %>
-                  </td>
-                </tr>
-                <% } %>
+            <% for (let date in history2) { %>
+              <% if (!dates.includes(date)) { dates.push(date); }}; dates.sort(); %>
+                <% for (let date of dates) { %>
+                  <tr>
+                    <td>
+                      <%= moment(date, 'DD-MM-YYYY' ).format('MMMM Do, YYYY') %>
+                    </td>
+                    <td>
+                      <% if (history1[date]) { %>
+                        <%= (history1[date].followersCount).toLocaleString('en-us') %>
+                          <% } %>
+                    </td>
+                    <td>
+                      <% if (history1[date]) { %>
+                        <%= (history1[date].postsCount).toLocaleString('en-us') %>
+                          <% } %>
+                    </td>
+                    <td>
+                      <% if (history1[date]) { %>
+                        <%= (history1[date].followsCount).toLocaleString('en-us') %>
+                          <% } %>
+                    </td>
+                    <th>|</th>
+                    <td>
+                      <% if (history2[date]) { %>
+                        <%= (history2[date].followersCount).toLocaleString('en-us') %>
+                          <% } %>
+                    </td>
+                    <td>
+                      <% if (history2[date]) { %>
+                        <%= (history2[date].postsCount).toLocaleString('en-us') %>
+                          <% } %>
+                    </td>
+                    <td>
+                      <% if (history2[date]) { %>
+                        <%= (history2[date].followsCount).toLocaleString('en-us') %>
+                          <% } %>
+                    </td>
+                  </tr>
+                  <% } %>
         </table>
       </center>
       <script>

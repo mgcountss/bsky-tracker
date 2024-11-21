@@ -13,8 +13,8 @@
         meta.title = "Bluesky Tracker - The Best Tool for User Stats on bsky.app!";
         meta.description = "Track user statistics and live follower counts on bsky.app effortlessly with Bluesky Tracker!";
     } else if (url.includes("user") && !url.includes("list")) {
-        meta.title = `Track: ${user.displayName}'s' (@${user.handle}) Statistics and Live Follower Count | Bluesky Tracker`;
-        meta.description = `Explore ${user.displayName}'s' (@${user.handle}) stats and live follower trends on bsky.app using Bluesky Tracker!`;
+        meta.title = `${user.displayName}'s' Statistics and Live Follower Count | Bluesky Tracker`;
+        meta.description = `Track ${user.displayName}'s' (@${user.handle}) stats and live follower trends on bsky.app using Bluesky Tracker!`;
     } else if (url.includes("list")) {
         const thing = url.includes("posts") ? "Posts" : "Users";
         meta.title = `Top ${thing} on bsky.app | Bluesky Tracker`;
@@ -23,8 +23,8 @@
         meta.title = "Compare Users on bsky.app | Bluesky Tracker";
         meta.description = "Find and compare two users' statistics on bsky.app with Bluesky Tracker!";
     } else if (url.includes("compare")) {
-        meta.title = "Comparing ${user1.displayName} vs ${user2.displayName} | Bluesky Tracker";
-        meta.description = "Analyze and compare ${user1.displayName} (@${user1.handle}) and ${user2.displayName} (@${user2.handle})'s stats on bsky.app with Bluesky Tracker!";
+        meta.title = `${user1.displayName} vs ${user2.displayName} | Bluesky Tracker`;
+        meta.description = `Analyze and compare ${user1.displayName} (@${user1.handle}) and ${user2.displayName} (@${user2.handle})'s stats on bsky.app with Bluesky Tracker!`;
     } else {
         meta.title = "Error: Page Not Found | Bluesky Tracker";
         meta.description = "The page you are looking for does not exist on bsky.app. Explore more on Bluesky Tracker!";
