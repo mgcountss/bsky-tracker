@@ -1,0 +1,6 @@
+node_modules
+database
+package-lock.json
+sitemaps
+screenshots
+.env
