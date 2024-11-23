@@ -5,6 +5,13 @@ const router = express.Router();
 
 async function getUser(ids) {
     try {
+        if (ids.length > 25) {
+            return {
+                "error": "Too many ids (max 25)",
+                "success": false,
+                "code": 400
+            };
+        }
         return await fetch('https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=' + ids.join("&actors="), {
             method: 'GET'
         })

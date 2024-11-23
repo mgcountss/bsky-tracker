@@ -24,15 +24,17 @@ app.get('/images/*', (req, res) => {
     res.sendFile(__dirname + req.url);
 });
 
+let channels = db.getTheChannels();
+let channelCount = db.keys();
 app.get('/', async (req, res) => {
-    let channels = db.getTheChannels();
-    let channelCount = db.keys();
     res.render('index', {
         channels: channels,
         channelCount: channelCount.length,
         moment: moment,
         url: "index"
     });
+    channels = db.getTheChannels();
+     channelCount = db.keys();
 });
 
 app.get('/user/:id', async (req, res) => {
@@ -125,6 +127,12 @@ app.get('/lists/:type', (req, res) => {
     }
 });
 
+app.get('/top50', (req, res) => {
+    res.render('top50', {
+        url: "top50"
+    });
+});
+
 app.get('/css/*', (req, res) => {
     if (req.url.includes('?')) {
         req.url = req.url.split('?')[0];
@@ -163,7 +171,15 @@ app.get('/sitemap.xml', (req, res) => {
 app.get('/api/data/all', (req, res) => {
     let data = db.getAll();
     if (req.query.min && req.query.max) {
-        data = data.slice(req.query.min, req.query.max);
+        let min = parseInt(req.query.min);
+        let max = parseInt(req.query.max);
+        let newData = {};
+        for (let key in data) {
+            if (parseInt(key) >= min && parseInt(key) <= max) {
+                newData[key] = data[key];
+            }
+        }
+        data = newData;
     }
     res.send(data);
 });

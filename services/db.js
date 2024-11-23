@@ -114,7 +114,14 @@ const sortData = (key, order, start, end) => {
 
 const milestoneDetector = (start, end) => {
     const milestones = [];
-
+    if (start < 1000000) {
+        const sixDigitMilestones = [100000, 200000, 300000, 400000, 500000, 600000, 700000, 800000, 900000];
+        for (const milestone of sixDigitMilestones) {
+            if (start < milestone && end >= milestone) {
+                milestones.push(milestone);
+            }
+        }
+    }
     if (end >= 1000000) {
         const startMillion = Math.floor(start / 1000000);
         const endMillion = Math.floor(end / 1000000);
@@ -123,18 +130,7 @@ const milestoneDetector = (start, end) => {
             milestones.push(million * 1000000);
         }
     }
-
-    if (end < 1000000) {
-        const sixDigitMilestones = [100000, 250000, 500000, 750000];
-
-        for (const milestone of sixDigitMilestones) {
-            if (start < milestone && end >= milestone) {
-                milestones.push(milestone);
-            }
-        }
-    }
-    
-    return { number: milestones[milestones.length - 1] };
+    return { number: milestones.length > 0 ? milestones[milestones.length - 1] : null };
 };
 
 const ensure = (id, value) => {

@@ -206,6 +206,4 @@ Source: https://bluesky.mgcounts.com/lists/users`,
     }
 };
 
-makePost(false, true, 1000, { handle: 'test', did: 'did:example:123' });
-
 export default makePost;

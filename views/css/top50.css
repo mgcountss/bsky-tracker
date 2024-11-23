@@ -1,0 +1,97 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: rgb(143, 142, 142);
+    margin: 0;
+    transition: background 1.5s;
+    overflow: hidden;
+    text-align: center;
+  }
+  
+  .row {
+    display: inline-block;
+  }
+  
+  .card {
+    height: 9.37vh;
+    width: 19.6vw;
+    padding: 0.3vw;
+    margin: 0.3vw;
+    text-align: left;
+    background: #f4f4f8;
+    margin-left: 1px;
+    transition: background 2s;
+  }
+  
+  .image {
+    width: 7.8vh;
+    height: 7.8vh;
+    float: left;
+    margin-right: 0.5vw;
+    margin-left: 0.5vw;
+  }
+  
+  .rank {
+    font-size: 3vh;
+    font-family: 'Roboto';
+    float: left;
+    margin-top: 2vh;
+  }
+  
+  .name {
+    font-family: 'Roboto Medium';
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 2.4vh;
+  }
+  
+  .count {
+    transition: color 2s;
+    font-size: 2.1vw;
+    font-family: "Roboto";
+    margin-top: -0.1vh;
+  }
+  
+  .counters {
+    display: none;
+  }
+  
+  .loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 75px;
+    height: 75px;
+    margin: -75px 0 0 -75px;
+    border: 16px solid #ffffff;
+    border-radius: 50%;
+    border-top: 16px solid #69db34;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+  
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
