@@ -191,6 +191,7 @@ const ensure = (id, value) => {
         db[id].updated_at = Date.now();
 
         if (milestone.happen) {
+            console.log("Milestone detected");
             makePost(false, true, milestone.number, milestone.user);
         }
     }
@@ -262,8 +263,8 @@ const getAll = () => {
 }
 
 setInterval(() => {
-    //fs.writeFileSync("./database/db.json", JSON.stringify(db, {}));
-}, 1000);
+    fs.writeFileSync("./database/db.json", JSON.stringify(db, {}));
+}, 60000);
 
 setInterval(() => {
     fs.writeFileSync("./database/backups/" + Date.now() + ".json", JSON.stringify(db, {}));

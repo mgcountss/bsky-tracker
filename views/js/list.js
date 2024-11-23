@@ -45,19 +45,20 @@ function makeCard(channel, i, force) {
     div.onclick = () => {
         window.location.href = `/user/${channel.did}`
     };
-    let rank = start + i + 1;
+    let rank = "#"+(start + i + 1)+" ";
     let gainMaybe = `<h2 class="overlay-label">${channel.followersCount.toLocaleString('en-us')} followers | ${channel.postsCount.toLocaleString('en-us')} posts | ${channel.followsCount.toLocaleString('en-us')} following</h2>`;
     if (channel.gained) {
-        gainMaybe = `<h2 class="overlay-label">Followers +${channel.gained.followersCount.toLocaleString('en-us')} | Posts +${channel.gained.postsCount.toLocaleString('en-us')} | Following +${channel.gained.followsCount.toLocaleString('en-us')}</h2>`;
+        gainMaybe = `<h2 class="overlay-label">Follows +${channel.gained.followersCount.toLocaleString('en-us')} | Posts +${channel.gained.postsCount.toLocaleString('en-us')} | Following +${channel.gained.followsCount.toLocaleString('en-us')}</h2>`;
     }
     if (force) {
         gainMaybe = `<h5 class="overlay-label" style="font-size: 1.5rem;">Followers ${channel.followersCount.toLocaleString('en-us')}</h5>`;
+        rank = "";
     }
     div.innerHTML = `
                 <div class="background-image" style="background: url('${channel.banner}') no-repeat center center; background-size: cover;"></div>
                 <div class="overlay">
                 <img src="${channel.avatar}" alt="Profile Picture" class="profile-picture">
-                  <h3 class="overlay-label">#${rank} ${channel.displayName}</h3>
+                  <h3 class="overlay-label">${rank}${channel.displayName}</h3>
                   <h6 class="overlay-label">@${channel.handle}</h6>
                   ${gainMaybe}
                   <hr><h5 class="overlay-label">Joined: ${moment(channel.createdAt).format('MMMM Do, YYYY')}</h5>
