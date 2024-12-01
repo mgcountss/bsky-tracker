@@ -95,3 +95,33 @@
       transform: rotate(360deg);
     }
   }
+
+  @media screen and (max-width: 600px) {
+    body {
+      overflow: auto;
+    }
+
+    .card {
+      height: 10vh;
+      width: 30vw;
+    }
+  
+    .image {
+      width: 4vh;
+      height: 4vh;
+      float: left;
+    }
+  
+    .rank {
+      font-size: 2vh;
+    }
+  
+    .name {
+      font-size: 4vh;
+    }
+  
+    .count {
+      font-size: 5.5vw;
+    }
+    
+  }

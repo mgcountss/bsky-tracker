@@ -193,9 +193,20 @@ const ensure = (id, value) => {
     }
 };
 
-const keys = () => {
-    const db = JSON.parse(fs.readFileSync("./database/db.json", "utf8"));
-    return Object.keys(db);
+const keys = (where) => {
+    if (where) {
+        let keys = Object.keys(db);
+        let newKeys = [];
+        for (let i = 0; i < keys.length; i++) {
+            if (where.where(db[keys[i]])) {
+                newKeys.push(keys[i]);
+            }
+        }
+        return newKeys;
+    } else {
+        const db = JSON.parse(fs.readFileSync("./database/db.json", "utf8"));
+        return Object.keys(db);
+    }
 };
 
 const all = () => {
@@ -254,6 +265,14 @@ const save = () => {
     fs.writeFileSync("./database/db.json", JSON.stringify(db, {}));
 };
 
+const getTop50 = () => {
+    let users = Object.entries(db);
+    let sorted = users.sort((a, b) => {
+        return b[1].followersCount - a[1].followersCount;
+    });
+    return sorted.slice(0, 50);
+};
+
 const getAll = () => {
     return db;
 }
@@ -276,5 +295,6 @@ export default {
     save,
     sortData,
     getTheChannels,
-    getAll
+    getAll,
+    getTop50
 };

@@ -3,7 +3,7 @@ import fetch from 'node-fetch';
 import db from '../services/db.js';
 const router = express.Router();
 
-async function getUser(ids) {
+async function getUsers(ids) {
     try {
         if (ids.length > 25) {
             return {
@@ -66,4 +66,4 @@ router.post('/', async (req, res) => {
 
 
 export default router;
-export { getUser };
+export { getUsers };

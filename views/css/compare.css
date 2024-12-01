@@ -396,4 +396,37 @@ div.overlay > h1 {
     .result {
         width: 100%;
     }
+
+    .overlay-label {
+        font-size: 1rem;
+    }
+
+    #compareButton {
+        width: 100%;
+    }
+
+    .bio {
+        font-size: 1rem;
+        margin-top: 0rem;
+    }
+
+    .topRowContainer {
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+
+    .leftTopRow {
+        height: 100%;
+    }
+
+    .smallStats {
+        text-align: center;
+        width: 100%;
+    }
+
+    .topRow {
+        height: 100%;
+        margin-bottom: 1rem;
+    }
 }

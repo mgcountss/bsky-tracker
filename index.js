@@ -33,9 +33,12 @@ app.get('/', async (req, res) => {
         moment: moment,
         url: "index"
     });
-    channels = db.getTheChannels();
-     channelCount = db.keys();
 });
+
+setInterval(async () => {
+    channels = db.getTheChannels();
+    channelCount = db.keys();
+}, 60000);
 
 app.get('/user/:id', async (req, res) => {
     try {
@@ -100,9 +103,8 @@ app.get('/compare/search', async (req, res) => {
 
 app.get('/lists/:type', (req, res) => {
     if (req.params.type == 'users') {
-        let total = db.keys().length;
         res.render('list', {
-            total: total,
+            total: channelCount.length,
             type: 'Users',
             options: [
                 { "name": "Followers", "value": "followersCount" },
@@ -111,9 +113,9 @@ app.get('/lists/:type', (req, res) => {
                 { "name": "Follower Gain (1D)", "value": "follower_gain_24" },
                 { "name": "Post Gain (1D)", "value": "post_gain_24" },
                 { "name": "Following Gain (1D)", "value": "following_gain_24" },
-                //{ "name": "Follower Gain (7D)", "value": "follower_gain_7" },
-                //{ "name": "Post Gain (7D)", "value": "post_gain_7" },
-                //{ "name": "Following Gain (7D)", "value": "following_gain_7" },
+                { "name": "Follower Gain (7D)", "value": "follower_gain_7" },
+                { "name": "Post Gain (7D)", "value": "post_gain_7" },
+                { "name": "Following Gain (7D)", "value": "following_gain_7" },
                 { "name": "Display Name", "value": "displayName" },
                 { "name": "Handle", "value": "handle" },
                 { "name": "Date Joined", "value": "createdAt" }],
@@ -184,6 +186,17 @@ app.get('/api/data/all', (req, res) => {
     res.send(data);
 });
 
+let top50 = db.getTop50();
+
+setInterval(() => {
+    top50 = db.getTop50();
+    updateAllUsers(50);
+}, 5000);
+
+app.post('/api/top50', (req, res) => {
+    res.send(top50);
+});
+
 app.get('*', (req, res) => {
     res.render('error', {
         error: '404 Not Found',
@@ -199,7 +212,7 @@ setInterval(async () => {
     let time = new Date();
     let hours = time.getHours();
     let minutes = time.getMinutes();
-    if (minutes === 0) {
+    if (minutes === 10) {
         await updateAllUsers();
         if (hours == 0) {
             await makePost(true).catch(console.error);
@@ -210,7 +223,7 @@ setInterval(async () => {
         }
     }
 }, 60000);
-updateAllUsers();
+//updateAllUsers();
 
 process.on('SIGINT', () => {
     db.save();

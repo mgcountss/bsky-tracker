@@ -289,4 +289,8 @@ hr {
     .result, .result2 {
         height: calc(3.5rem + 10vw);
     }
+
+    .side1 {
+        order: 2;
+    }
 }
