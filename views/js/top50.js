@@ -1,7 +1,7 @@
 var c = 1;
 var counts = [];
 var ids = [];
-let interval;
+var first = true;
 
 for (var l = 1; l <= 5; l++) {
     var htmlrow = `<div class="row_${l} row"></div>`;
@@ -9,15 +9,19 @@ for (var l = 1; l <= 5; l++) {
     for (var t = 1; t <= 10; t++) {
         var cc = ""
         if (c < 10) { cc = "0" + c; } else { cc = c; }
-        var htmlcard = `<div class="channel_${c} card" id="card_thing_${c}">
+        var htmlcard = `<div class="channel_${c} card" id="card_thing_${c}" onclick="goToProfile(${c - 1})">
       <div class="rank">${cc}</div>
-      <img src="./default.png" class="image" id="img_${c}">
+      <img src="./images/favicon.ico" class="image" id="img_${c}">
       <div class="name">Loading...</div>
-      <div class="count odometer">0</div>
+      <div class="count odometer" id="count_${c}">0</div>
       </div>`;
         $('.row_' + l).append(htmlcard);
         c += 1;
     }
+}
+
+const goToProfile = (index) => {
+    window.location.href = "/user/" + ids[index];
 }
 
 function updateData(q, data) {
@@ -30,13 +34,9 @@ function updateData(q, data) {
         $(".channel_" + cnb + " .count").html(Math.floor(data.followersCount));
         if ((counts[q] == data.followersCount) == false) {
             colorSwap(cnb, "#d9e3f2");
-            setTimeout(function () { colorSwap(cnb, "#f4f4f8"); }, 1000);
+            setTimeout(function () { colorSwap(cnb, ""); }, 1000);
         }
         counts[q] = data.followersCount;
-        if (q == 0) {
-            console.log("Updated all channels");
-            setTimeout(function () { $('.loader').fadeOut(); $('.counters').fadeIn(1); }, 1)
-        }
     }, q * 500);
 }
 
@@ -52,14 +52,15 @@ function updateChannels() {
             ids.push(data[q][0]);
             updateData(q, data[q][1]);
         }
-        clearInterval(interval);
-        interval = setInterval(updateChannels, 10000);
+        if (first) {
+            setTimeout(function () { $('.loader').fadeOut(); $('.counters').fadeIn(1); }, 1)
+            first = false;
+            setInterval(updateChannels, 5000);
+        }
     });
 };
 updateChannels();
 
 function colorSwap(cnb, color) {
     document.getElementById("card_thing_" + cnb + "").style.backgroundColor = color;
-    //"#d9e3f2";
-    //"#f4f4f8";
 }

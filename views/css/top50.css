@@ -1,127 +1,111 @@
 * {
-    box-sizing: border-box;
-  }
-  
-  body {
-    background: rgb(143, 142, 142);
-    margin: 0;
-    transition: background 1.5s;
-    overflow: hidden;
-    text-align: center;
-  }
-  
-  .row {
-    display: inline-block;
-  }
-  
-  .card {
-    height: 9.37vh;
-    width: 19.6vw;
-    padding: 0.3vw;
-    margin: 0.3vw;
-    text-align: left;
-    background: #f4f4f8;
-    margin-left: 1px;
-    transition: background 2s;
-  }
-  
-  .image {
-    width: 7.8vh;
-    height: 7.8vh;
-    float: left;
-    margin-right: 0.5vw;
-    margin-left: 0.5vw;
-  }
-  
-  .rank {
-    font-size: 3vh;
-    font-family: 'Roboto';
-    float: left;
-    margin-top: 2vh;
-  }
-  
+  box-sizing: border-box;
+}
+
+body {
+  background: rgb(143, 142, 142);
+  margin: 0;
+  transition: background 1.5s;
+  text-align: center;
+}
+
+.row {
+  display: inline-block;
+}
+
+.card {
+  height: 9.5vh;
+  width: 18.5vw;
+  margin: 0.25vw;
+  text-align: left;
+  background: #f4f4f8;
+  margin-left: 1px;
+  transition: background 2s;
+}
+
+.image {
+  width: 4vw;
+  height: 4vw;
+  float: left;
+  margin: 0.5rem;
+}
+
+.rank {
+  font-size: 1rem;
+  font-family: 'Arial';
+  float: right;
+  padding-top: 4rem;
+  padding-right: 0.5rem;
+  font-weight: bold;
+}
+
+.name {
+  font-family: 'Arial';
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: calc(0.5rem + 1vw);
+  padding-top: 0.25rem;
+  font-weight: bold;
+}
+
+.count {
+  transition: color 2s;
+  font-size: 2rem;
+  font-size: calc(0.5rem + 1.5vw);
+  font-family: "Arial";
+}
+
+.counters {
+  display: none;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 120px;
+  height: 120px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #ffffff;
+  border-radius: 50%;
+  border-top: 16px solid #69db34;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+.card:hover {
+  cursor: pointer;
+  background-color: #bed3f1;
+}
+
+@media screen and (max-width: 600px) {
   .name {
-    font-family: 'Roboto Medium';
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 2.4vh;
+    white-space: wrap;
+    overflow: visible;
   }
-  
-  .count {
-    transition: color 2s;
-    font-size: 2.1vw;
-    font-family: "Roboto";
-    margin-top: -0.1vh;
+
+  .rank {
+    padding-top: 0.5rem;
   }
-  
-  .counters {
-    display: none;
-  }
-  
-  .loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    z-index: 1;
-    width: 75px;
-    height: 75px;
-    margin: -75px 0 0 -75px;
-    border: 16px solid #ffffff;
-    border-radius: 50%;
-    border-top: 16px solid #69db34;
-    width: 120px;
-    height: 120px;
-    -webkit-animation: spin 2s linear infinite;
-    animation: spin 2s linear infinite;
-  }
-  
-  @-webkit-keyframes spin {
-    0% {
+}
+
+@-webkit-keyframes spin {
+  0% {
       -webkit-transform: rotate(0deg);
-    }
-  
-    100% {
+  }
+
+  100% {
       -webkit-transform: rotate(360deg);
-    }
   }
-  
-  @keyframes spin {
-    0% {
+}
+
+@keyframes spin {
+  0% {
       transform: rotate(0deg);
-    }
-  
-    100% {
+  }
+
+  100% {
       transform: rotate(360deg);
-    }
   }
-
-  @media screen and (max-width: 600px) {
-    body {
-      overflow: auto;
-    }
-
-    .card {
-      height: 10vh;
-      width: 30vw;
-    }
-  
-    .image {
-      width: 4vh;
-      height: 4vh;
-      float: left;
-    }
-  
-    .rank {
-      font-size: 2vh;
-    }
-  
-    .name {
-      font-size: 4vh;
-    }
-  
-    .count {
-      font-size: 5.5vw;
-    }
-    
-  }
+}

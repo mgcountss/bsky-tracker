@@ -4,7 +4,8 @@
         description: "Track user statistics and follower counts on bsky.app with Bluesky Tracker!",
         siteName: "Bluesky Tracker",
         image: "https://bluesky.mgcounts.com/images/logo.png",
-        url: `https://bluesky.mgcounts.com/${url}`
+        url: `https://bluesky.mgcounts.com/${url}`,
+        tags: ["bsky", "bsky.app", "bluesky", "bluesky tracker", "bsky tracker", "bsky stats", "bsky follower count", "bsky user stats", "bsky user statistics", "bsky user tracker", "bsky follower tracker", "bsky user follower count", "bsky user follower tracker", "bsky user follower stats", "bsky user follower statistics", "bsky user follower count tracker", "bsky user follower stats tracker", "bsky user followers"]
     };
 
     let meta = { ...defaultMeta };
@@ -46,6 +47,9 @@
     <meta property="og:description" content="<%= meta.description %>">
     <meta property="og:url" content="<%= meta.url %>">
     <meta property="og:image" content="<%= meta.image %>">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+    <meta name="keywords" content="<%= meta.tags.join(", ") %>">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
