@@ -14,6 +14,7 @@
         meta.title = "Bluesky Tracker - The Best Tool for User Stats on bsky.app!";
         meta.description = "Track user statistics and live follower counts on bsky.app effortlessly with Bluesky Tracker!";
     } else if (url.includes("user") && !url.includes("list")) {
+        if (!user.displayName) user.displayName = user.handle;
         meta.title = `${user.displayName}'s' Statistics and Live Follower Count | Bluesky Tracker`;
         meta.description = `Track ${user.displayName}'s' (@${user.handle}) stats and live follower trends on bsky.app using Bluesky Tracker!`;
     } else if (url.includes("list")) {
@@ -24,6 +25,8 @@
         meta.title = "Compare Users on bsky.app | Bluesky Tracker";
         meta.description = "Find and compare two users' statistics on bsky.app with Bluesky Tracker!";
     } else if (url.includes("compare")) {
+        if (!user1.displayName) user1.displayName = user1.handle;
+        if (!user2.displayName) user2.displayName = user2.handle;
         meta.title = `${user1.displayName} vs ${user2.displayName} | Bluesky Tracker`;
         meta.description = `Analyze and compare ${user1.displayName} (@${user1.handle}) and ${user2.displayName} (@${user2.handle})'s stats on bsky.app with Bluesky Tracker!`;
     } else if (url.includes("top50")) {
