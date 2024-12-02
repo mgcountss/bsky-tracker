@@ -19,6 +19,16 @@ const waitForTimeout = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 let futurePosts = [];
 let makingPost = false;
 
+const writeError = (error) => {
+    fs.writeFile('./error.txt', error, (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log('Error written to error.txt');
+    });
+};
+
 const makePost = async (fastest, milestone, milestoneCount, user) => {
     try {
         if (makingPost) {
@@ -69,6 +79,7 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
                     const nextPost = futurePosts.shift();
                     await makePost(nextPost.fastest, nextPost.milestone, nextPost.milestoneCount, nextPost.user);
                 }
+                writeError('Failed to upload image ms.png');
                 return;
             }
 
@@ -103,6 +114,7 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
             });
 
             console.log('Milestone post created successfully!');
+            await browser.close();
         } else {
             await page.goto('http://bluesky.mgcounts.com/lists/users');
             await page.waitForNetworkIdle();
@@ -116,7 +128,7 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
                 text = 'Fastest Growing';
                 text2 = 'This is based off how many followers they have gained in the past 24 hours.';
                 await page.waitForNetworkIdle();
-                waitForTimeout(5000);
+                waitForTimeout(10000);
             }
 
             for (let i = 1; i < 5; i++) {
@@ -168,6 +180,7 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
                     const nextPost = futurePosts.shift();
                     await makePost(nextPost.fastest, nextPost.milestone, nextPost.milestoneCount, nextPost.user);
                 }
+                writeError('No images uploaded successfully, aborting post.');
                 return;
             }
 
@@ -188,7 +201,6 @@ Source: https://bluesky.mgcounts.com/lists/users`,
             await browser.close();
         }
 
-        await browser.close();
         makingPost = false;
         if (futurePosts.length > 0) {
             const nextPost = futurePosts.shift();
@@ -201,6 +213,12 @@ Source: https://bluesky.mgcounts.com/lists/users`,
         if (futurePosts.length > 0) {
             const nextPost = futurePosts.shift();
             await makePost(nextPost.fastest, nextPost.milestone, nextPost.milestoneCount, nextPost.user);
+        }
+        writeError(error);
+        try {
+            await browser.close();
+        } catch (error) {
+            console.error(error);
         }
         return;
     }

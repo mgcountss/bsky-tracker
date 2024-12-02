@@ -14,6 +14,12 @@ const has = (id) => {
     return !!db[id];
 };
 
+const calculateAgo = (days) => {
+    let date = new Date();
+    date.setDate(date.getDate() - days);
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+}
+
 const sortData = (key, order, start, end) => {
     try {
         let newDB = [...Object.entries(db)];
@@ -33,13 +39,8 @@ const sortData = (key, order, start, end) => {
             return sortedData.slice(start, end);
         } else if (key == "follower_gain_7" || key == "post_gain_7" || key == "following_gain_7" || key == "follower_gain_24" || key == "post_gain_24" || key == "following_gain_24") {
             let newDB = JSON.parse(JSON.stringify(db));
-            let date = new Date();
-            date.setDate(date.getDate() - 1);
-            if (key.includes("7")) {
-                date.setDate(date.getDate() - 6);
-            }
-            let dateStr = date.toISOString().split("T")[0];
-            let todayDateStr = new Date().toISOString().split("T")[0];
+            let dateStr = calculateAgo(key.includes("7") ? 7 : 1);
+            let todayDateStr = calculateAgo(0);
 
             for (let key in newDB) {
                 try {
@@ -149,9 +150,12 @@ const ensure = (id, value) => {
             db[id].daily = {};
         }
 
-        if (db[id].daily[`${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`]) {
+        const todayDateStr = calculateAgo(0);
+        const yesterdayDateStr = calculateAgo(1);
+
+        if (db[id].daily[todayDateStr]) {
             let ms = db[id].followersCount;
-            let lastCount = db[id].daily[`${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`].followersCount;
+            let lastCount = db[id].daily[todayDateStr].followersCount;
             let msD = milestoneDetector(lastCount, ms);
             if (msD.number) {
                 if (lastCount < msD.number && msD.number <= ms) {
@@ -161,10 +165,8 @@ const ensure = (id, value) => {
                 }
             }
         }
-        let date = new Date();
-        date.setDate(date.getDate() - 1);
-        let dateStr = date.toISOString().split("T")[0];
-        let yesterday = db[id].daily[dateStr];
+
+        const yesterday = db[id].daily[yesterdayDateStr];
         if (yesterday) {
             let ms = db[id].followersCount;
             let lastCount = yesterday.followersCount;
@@ -178,7 +180,7 @@ const ensure = (id, value) => {
             }
         }
 
-        db[id].daily[`${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`] = {
+        db[id].daily[todayDateStr] = {
             followersCount: db[id].followersCount,
             postsCount: db[id].postsCount,
             followsCount: db[id].followsCount,
@@ -186,8 +188,9 @@ const ensure = (id, value) => {
         };
         db[id].updated_at = Date.now();
 
-        if (milestone.happen) {
-            console.log("Milestone detected");
+        if (milestone.happen && (milestone.number !== db[id].lastMilestone)) {
+            db[id].lastMilestone = milestone.number;
+            console.log("Milestone detected", milestone.number, milestone.user.handle);
             makePost(false, true, milestone.number, milestone.user);
         }
     }

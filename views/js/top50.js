@@ -21,7 +21,7 @@ for (var l = 1; l <= 5; l++) {
 }
 
 const goToProfile = (index) => {
-    window.open("https://bsky.app/profile/" + ids[index], "_blank");
+    window.open("./user/" + ids[index], "_blank");
 }
 
 function updateData(q, data) {

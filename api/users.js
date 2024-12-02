@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
             "success": false
         });
     }
-    await getUser(req.body.ids).then(data => {
+    await getUsers(req.body.ids).then(data => {
         let code = data.code;
         delete data.code;
         res.status(code).send(data);
