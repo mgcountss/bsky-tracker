@@ -1,5 +1,5 @@
 var c = 1;
-var counts = [];
+var counts = Array(50).fill(0);
 var ids = [];
 var first = true;
 
@@ -10,10 +10,10 @@ for (var l = 1; l <= 5; l++) {
         var cc = ""
         if (c < 10) { cc = "0" + c; } else { cc = c; }
         var htmlcard = `<div class="channel_${c} card" id="card_thing_${c}" onclick="goToProfile(${c - 1})">
-      <div class="rank">${cc}</div>
       <img src="./images/favicon.ico" class="image" id="img_${c}">
       <div class="name">Loading...</div>
       <div class="count odometer" id="count_${c}">0</div>
+      <div class="rank">${cc}</div>
       </div>`;
         $('.row_' + l).append(htmlcard);
         c += 1;
@@ -21,7 +21,7 @@ for (var l = 1; l <= 5; l++) {
 }
 
 const goToProfile = (index) => {
-    window.location.href = "/user/" + ids[index];
+    window.open("https://bsky.app/profile/" + ids[index], "_blank");
 }
 
 function updateData(q, data) {
@@ -30,10 +30,18 @@ function updateData(q, data) {
         if (document.getElementById("img_" + cnb + "").src != data.avatar) {
             document.getElementById("img_" + cnb + "").src = data.avatar;
         }
-        $(".channel_" + cnb + " .name").html(data.displayName);
+        $(".channel_" + cnb + " .name").html(data.displayName || data.handle);
         $(".channel_" + cnb + " .count").html(Math.floor(data.followersCount));
-        if ((counts[q] == data.followersCount) == false) {
-            colorSwap(cnb, "#d9e3f2");
+        console.log(data.followersCount, counts[q]);
+        if (!(counts[q] == data.followersCount)) {
+            if (counts[q] > data.followersCount) {
+                colorSwap(cnb, "#f8d7da");
+                console.log("red");
+            };
+            if (counts[q] < data.followersCount) {
+                colorSwap(cnb, "#c9e8d0")
+                console.log("green");
+            };
             setTimeout(function () { colorSwap(cnb, ""); }, 1000);
         }
         counts[q] = data.followersCount;

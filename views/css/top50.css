@@ -14,7 +14,7 @@ body {
 }
 
 .card {
-  height: 9.5vh;
+  height: 8.5vh;
   width: 18.5vw;
   margin: 0.25vw;
   text-align: left;
@@ -27,14 +27,14 @@ body {
   width: 4vw;
   height: 4vw;
   float: left;
-  margin: 0.5rem;
+  margin-top: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .rank {
-  font-size: 1rem;
+  font-size: calc(0.5rem + 1vw);
   font-family: 'Arial';
   float: right;
-  padding-top: 4rem;
   padding-right: 0.5rem;
   font-weight: bold;
 }
@@ -43,20 +43,20 @@ body {
   font-family: 'Arial';
   white-space: nowrap;
   overflow: hidden;
-  font-size: calc(0.5rem + 1vw);
+  font-size: 3vmin;
   padding-top: 0.25rem;
   font-weight: bold;
 }
 
 .count {
   transition: color 2s;
-  font-size: 2rem;
   font-size: calc(0.5rem + 1.5vw);
   font-family: "Arial";
 }
 
 .counters {
-  display: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
 }
 
 .loader {
@@ -79,17 +79,6 @@ body {
   background-color: #bed3f1;
 }
 
-@media screen and (max-width: 600px) {
-  .name {
-    white-space: wrap;
-    overflow: visible;
-  }
-
-  .rank {
-    padding-top: 0.5rem;
-  }
-}
-
 @-webkit-keyframes spin {
   0% {
       -webkit-transform: rotate(0deg);
@@ -107,5 +96,18 @@ body {
 
   100% {
       transform: rotate(360deg);
+  }
+}
+
+
+@media only screen and (max-width: 1024px) and (orientation: landscape) {
+  .card {
+    height: 14vh;
+  }
+
+  .rank {
+    margin-top: -0.5rem;
+    font-size: 2.5vmin;
+    margin-right: -0.3rem;
   }
 }
