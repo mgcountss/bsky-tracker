@@ -1,13 +1,9 @@
 import fs from "fs";
 import makePost from "./makePost.js";
-const db = JSON.parse(fs.readFileSync("./database/db.json", "utf8"));
+let db = JSON.parse(fs.readFileSync("./database/db.json", "utf8"));
 
 const get = (id) => {
     return db[id];
-};
-
-const del = (id) => {
-    delete db[id];
 };
 
 const has = (id) => {
@@ -135,37 +131,39 @@ const milestoneDetector = (start, end) => {
 };
 
 const ensure = (id, value) => {
-    let milestone = {
-        happen: false,
-        number: null,
-        user: null
-    };
     if (!db[id]) {
         db[id] = value;
     } else {
         for (const key in value) {
             db[id][key] = value[key];
         }
-        if (!db[id].daily) {
-            db[id].daily = {};
-        }
+    }
 
-        const todayDateStr = calculateAgo(0);
-        const yesterdayDateStr = calculateAgo(1);
+    let milestone = {
+        happen: false,
+        number: null,
+        user: null
+    };
+    const todayDateStr = calculateAgo(0);
+    const yesterdayDateStr = calculateAgo(1);
 
-        if (db[id].daily[todayDateStr]) {
-            let ms = db[id].followersCount;
-            let lastCount = db[id].daily[todayDateStr].followersCount;
-            let msD = milestoneDetector(lastCount, ms);
-            if (msD.number) {
-                if (lastCount < msD.number && msD.number <= ms) {
-                    milestone.happen = true;
-                    milestone.number = msD.number;
-                    milestone.user = db[id];
-                }
+    if (!db[id].daily) {
+        db[id].daily = {};
+    }
+    if (db[id].daily[todayDateStr]) {
+        let ms = db[id].followersCount;
+        let lastCount = db[id].daily[todayDateStr].followersCount;
+        let msD = milestoneDetector(lastCount, ms);
+        if (msD.number) {
+            if (lastCount < msD.number && msD.number <= ms) {
+                milestone.happen = true;
+                milestone.number = msD.number;
+                milestone.user = db[id];
             }
         }
+    }
 
+    if (!milestone.happen) {
         const yesterday = db[id].daily[yesterdayDateStr];
         if (yesterday) {
             let ms = db[id].followersCount;
@@ -179,20 +177,20 @@ const ensure = (id, value) => {
                 }
             }
         }
+    }
 
-        db[id].daily[todayDateStr] = {
-            followersCount: db[id].followersCount,
-            postsCount: db[id].postsCount,
-            followsCount: db[id].followsCount,
-            updatedAt: db[id].updated_at
-        };
-        db[id].updated_at = Date.now();
+    db[id].daily[todayDateStr] = {
+        followersCount: db[id].followersCount,
+        postsCount: db[id].postsCount,
+        followsCount: db[id].followsCount,
+        updatedAt: db[id].updated_at
+    };
+    db[id].updated_at = Date.now();
 
-        if (milestone.happen && (milestone.number !== db[id].lastMilestone)) {
-            db[id].lastMilestone = milestone.number;
-            console.log("Milestone detected", milestone.number, milestone.user.handle);
-            makePost(false, true, milestone.number, milestone.user);
-        }
+    if (milestone.happen && (milestone.number !== db[id].lastMilestone)) {
+        db[id].lastMilestone = milestone.number;
+        console.log("Milestone detected", milestone.number, milestone.user.handle);
+        makePost(false, true, milestone.number, milestone.user);
     }
 };
 
@@ -264,16 +262,38 @@ const getTheChannels = () => {
     return [mostFollowed, mostPosts, mostFollowing, newest, random, us];
 };
 
-const save = () => {
-    fs.writeFileSync("./database/db.json", JSON.stringify(db, {}));
-};
+let top50IdsLol = [];
 
-const getTop50 = () => {
-    let users = Object.entries(db);
-    let sorted = users.sort((a, b) => {
+function setTop50() {
+    let dblol = [...Object.entries(db)]
+    let sorted = dblol.sort((a, b) => {
         return b[1].followersCount - a[1].followersCount;
     });
-    return sorted.slice(0, 50);
+    top50IdsLol = sorted.slice(0, 51).map((user) => user[0]);
+}
+setTop50();
+setInterval(() => {
+    setTop50();
+}, 300000);
+
+const getTop50 = (onlyReturnIdsFromMainDb) => {
+    if (onlyReturnIdsFromMainDb) {
+        return top50IdsLol;
+    }
+    let users = [...Object.entries(db)];
+    let sorted = users.sort((a, b) => {
+        return b[1].followersCount - a[1].followersCount
+    });
+    sorted = sorted.slice(0, 50);
+    sorted = sorted.map((user) => {
+        return {
+            did: user[1].did,
+            followersCount: user[1].followersCount,
+            displayName: user[1].displayName,
+            avatar: user[1].avatar,
+        };
+    });
+    return sorted;
 };
 
 const getAll = () => {
@@ -281,23 +301,24 @@ const getAll = () => {
 }
 
 setInterval(() => {
-    fs.writeFileSync("./database/db.json", JSON.stringify(db, {}));
-}, 60000);
+    fs.writeFileSync("./database/db.json", JSON.stringify(db), "utf8");
+}, 600000);
 
 setInterval(() => {
-    fs.writeFileSync("./database/backups/" + Date.now() + ".json", JSON.stringify(db, {}));
-}, 1000 * 60 * 60 * 1);
+    fs.writeFileSync(`./database/backups/db_backup_${Date.now()}.json`, JSON.stringify(db), "utf8");
+}, 1000 * 60 * 60 * 12);
 
 export default {
     get,
     has,
     ensure,
     keys,
-    delete: del,
     all,
-    save,
     sortData,
     getTheChannels,
     getAll,
-    getTop50
+    getTop50,
+    save: () => {
+        fs.writeFileSync("./database/db.json", JSON.stringify(db), "utf8");
+    }
 };

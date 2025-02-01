@@ -20,12 +20,10 @@ let futurePosts = [];
 let makingPost = false;
 
 const writeError = (error) => {
-    fs.writeFile('./error.txt', error, (err) => {
+    fs.appendFile('./error.text', `${error}\n`, (err) => {
         if (err) {
-            console.error(err);
-            return;
+            console.error('Failed to write error to error.log');
         }
-        console.log('Error written to error.txt');
     });
 };
 
@@ -39,6 +37,7 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
         const browser = await puppeteer.launch({
             headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            protocolTimeout: 90000,
         });
         const page = await browser.newPage();
         await page.setViewport({ width: 1200, height: 400 });
@@ -47,13 +46,20 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
             console.log(`Congratulations to ${user.handle} for reaching ${milestoneCount.toLocaleString()} followers! ${user.did}`);
             await page.goto(`http://localhost:3000/lists/users?force=${user.did}`);
             await page.waitForNetworkIdle();
-            waitForTimeout(5000);
+            waitForTimeout(10000);
 
             const child = await page.$('#results > :nth-child(1)');
             if (child) {
                 await child.screenshot({ path: `./screenshots/ms.png` });
             } else {
                 console.log('No child found within .results at position 1');
+                makingPost = false;
+                if (futurePosts.length > 0) {
+                    const nextPost = futurePosts.shift();
+                    await makePost(nextPost.fastest, nextPost.milestone, nextPost.milestoneCount, nextPost.user);
+                    writeError('No child found within .results at position 1');
+                }
+                return;
             }
 
             const agent = new BskyAgent({
@@ -118,7 +124,7 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
         } else {
             await page.goto('http://bluesky.mgcounts.com/lists/users');
             await page.waitForNetworkIdle();
-            waitForTimeout(5000);
+            waitForTimeout(10000);
             let text = "Most Followed";
             let text2 = "This is based off their total number of followers.";
             if (fastest) {
@@ -189,7 +195,7 @@ const makePost = async (fastest, milestone, milestoneCount, user) => {
 
 ${text2}
 
-Source: https://bluesky.mgcounts.com/lists/users`,
+Source: https://www.bsky-tracker.xyz/lists/users`,
                 embed: {
                     $type: 'app.bsky.embed.images',
                     images

@@ -5,14 +5,35 @@ import path from 'path';
 import updateAllUsers from './services/updateAllUsers.js';
 import moment from 'moment';
 import db from './services/db.js';
-import siteMapLol from './services/sitemap.js'
 import makePost from './services/makePost.js';
 
 const app = express();
+app.set('trust proxy', true);
+
 const __dirname = path.resolve();
 app.use(bodyParser.json());
 app.set('view engine', 'ejs');
 let userFunctions = {};
+
+app.use('*', (req, res, next) => {
+    /*
+    console.log('Request Info:', {
+        host: req.headers.host,
+        url: req.url,
+        originalUrl: req.originalUrl,
+        method: req.method,
+        headers: req.headers
+    });
+    next();*/
+    const host = req.headers.host;
+    if (host.includes('bluesky.mgcounts.com')) {
+        const targetHost = 'www.bsky-tracker.xyz';
+        const targetUrl = `https://${targetHost}${req.originalUrl}`;
+        console.log('Redirecting to:', targetUrl);
+        return res.redirect(targetUrl);
+    }
+    next();
+});
 
 fs.readdirSync('./api/').forEach(async (file) => {
     const route = await import(`./api/${file}`);
@@ -26,6 +47,7 @@ app.get('/images/*', (req, res) => {
 
 let channels = db.getTheChannels();
 let channelCount = db.keys();
+
 app.get('/', async (req, res) => {
     res.render('index', {
         channels: channels,
@@ -35,7 +57,7 @@ app.get('/', async (req, res) => {
     });
 });
 
-setInterval(async () => {
+setInterval(function () {
     channels = db.getTheChannels();
     channelCount = db.keys();
 }, 60000);
@@ -70,14 +92,25 @@ app.get('/compare/:id1/:id2', async (req, res) => {
     try {
         const user1 = await userFunctions.user(req.params.id1);
         const user2 = await userFunctions.user(req.params.id2);
-        const history1 = await userFunctions.history(req.params.id1);
-        const history2 = await userFunctions.history(req.params.id2);
+        let history1 = await userFunctions.history(req.params.id1);
+        let history2 = await userFunctions.history(req.params.id2);
+        if (!history1) {
+            history1 = { history: [] };
+        }
+        if (!history2) {
+            history2 = { history: [] };
+        }
+        let olderDate = '1';
+        if (Object.keys(history2.history).length > Object.keys(history1.history).length) {
+            olderDate = '2';
+        }
         if (user1.success && user2.success) {
             res.render('compare', {
                 user1: user1.user,
                 user2: user2.user,
                 history1: history1.history,
                 history2: history2.history,
+                olderDate: olderDate,
                 moment: moment,
                 url: "compare/" + req.params.id1 + "/" + req.params.id2
             });
@@ -149,25 +182,12 @@ app.get('/js/*', (req, res) => {
     res.sendFile(__dirname + '/views/js/' + req.url.split('/')[2]);
 });
 
-app.get('/sitemaps/*', (req, res) => {
-    let file = req.url.split('/')[2];
-    if (file.includes('.xml')) {
-        res.sendFile(__dirname + '/sitemaps/' + file);
-    } else {
-        res.sendFile(__dirname + '/sitemaps/' + req.url.split('/')[2] + '/' + req.url.split('/')[3]);
-    }
-});
-
 app.get('/favicon.ico', (req, res) => {
     res.sendFile(__dirname + '/images/favicon.ico');
 });
 
 app.get('/robots.txt', (req, res) => {
     res.sendFile(__dirname + '/views/assets/robots.txt');
-});
-
-app.get('/sitemap.xml', (req, res) => {
-    res.sendFile(__dirname + '/views/assets/sitemap.xml');
 });
 
 app.get('/api/data/all', (req, res) => {
@@ -187,14 +207,22 @@ app.get('/api/data/all', (req, res) => {
 });
 
 let top50 = db.getTop50();
-
-setInterval(() => {
+setInterval(function () {
     top50 = db.getTop50();
-    updateAllUsers(50);
 }, 5000);
 
 app.post('/api/top50', (req, res) => {
     res.send(top50);
+});
+
+app.get('/ads/test', (req, res) => {
+    res.render('ads', {
+        url: "ads"
+    });
+});
+
+app.get('/ads.txt', (req, res) => {
+    res.sendFile(__dirname + '/views/assets/ads.txt');
 });
 
 app.get('*', (req, res) => {
@@ -215,18 +243,19 @@ setInterval(async () => {
     if (minutes === 10) {
         await updateAllUsers();
         if (hours == 0) {
-            await makePost(true).catch(console.error);
+            //await makePost(true).catch(console.error);
         } else if (hours == 12) {
             await makePost().catch(console.error);
-        } else if (hours == 1) {
-            siteMapLol();
         }
     }
 }, 60000);
+updateAllUsers(50);
+setTimeout(() => {
+    updateAllUsers(50);
+}, 5000);
 //updateAllUsers();
 
 process.on('SIGINT', () => {
     db.save();
-    console.log('Saved database');
     process.exit();
 });

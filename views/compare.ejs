@@ -168,10 +168,15 @@
               Following
             </th>
           </tr>
-          <% var dates=Object.keys(history1); %>
-            <% for (let date in history2) { %>
-              <% if (!dates.includes(date)) { dates.push(date); }}; dates.sort(); %>
+          <% var dates=Object.keys(history1);%>
+          <% if (olderDate == '2') { dates = Object.keys(history2); } %>
+          
+          <% dates= dates.reverse(); %>
+          <% for (let date of dates) {%>
+              <% if (!dates.includes(date)) { dates.push(date); }}; %>
                 <% for (let date of dates) { %>
+                  <% let yesterday = moment(date, 'D-M-YYYY').subtract(1, 'days').format('D-M-YYYY'); %>
+                 
                   <tr>
                     <td>
                       <%= moment(date, 'DD-MM-YYYY' ).format('MMMM Do, YYYY') %>
@@ -179,32 +184,86 @@
                     <td>
                       <% if (history1[date]) { %>
                         <%= (history1[date].followersCount).toLocaleString('en-us') %>
+                        <% if (history1[yesterday]) { %>
+                          <% if (history1[date].followersCount > history1[yesterday].followersCount) { %>
+                            <span style="color: green;">+<%= (history1[date].followersCount - history1[yesterday].followersCount).toLocaleString('en-us') %></span>
+                            <% } else if (history1[date].followersCount < history1[yesterday].followersCount) { %>
+                              <span style="color: red;">-<%= (history1[yesterday].followersCount - history1[date].followersCount).toLocaleString('en-us') %></span>
+                              <% } else { %>
+                                <span style="color: grey;">±0</span>
+                                <% } %>
+                              <% } %>
                           <% } %>
                     </td>
                     <td>
                       <% if (history1[date]) { %>
                         <%= (history1[date].postsCount).toLocaleString('en-us') %>
+                        <% if (history1[yesterday]) { %>
+                          <% if (history1[date].postsCount > history1[yesterday].postsCount) { %>
+                            <span style="color: green;">+<%= (history1[date].postsCount - history1[yesterday].postsCount).toLocaleString('en-us') %></span>
+                            <% } else if (history1[date].postsCount < history1[yesterday].postsCount) { %>
+                              <span style="color: red;">-<%= (history1[yesterday].postsCount - history1[date].postsCount).toLocaleString('en-us') %></span>
+                              <% } else { %>
+                                <span style="color: grey;">±0</span>
+                                <% } %>
+                              <% } %>
                           <% } %>
                     </td>
                     <td>
                       <% if (history1[date]) { %>
                         <%= (history1[date].followsCount).toLocaleString('en-us') %>
+                        <% if (history1[yesterday]) { %>
+                          <% if (history1[date].followsCount > history1[yesterday].followsCount) { %>
+                            <span style="color: green;">+<%= (history1[date].followsCount - history1[yesterday].followsCount).toLocaleString('en-us') %></span>
+                            <% } else if (history1[date].followsCount < history1[yesterday].followsCount) { %>
+                              <span style="color: red;">-<%= (history1[yesterday].followsCount - history1[date].followsCount).toLocaleString('en-us') %></span>
+                              <% } else { %>
+                                <span style="color: grey;">±0</span>
+                                <% } %>
+                              <% } %>
                           <% } %>
                     </td>
                     <th>|</th>
                     <td>
                       <% if (history2[date]) { %>
                         <%= (history2[date].followersCount).toLocaleString('en-us') %>
+                        <% if (history2[yesterday]) { %>
+                          <% if (history2[date].followersCount > history2[yesterday].followersCount) { %>
+                            <span style="color: green;">+<%= (history2[date].followersCount - history2[yesterday].followersCount).toLocaleString('en-us') %></span>
+                            <% } else if (history2[date].followersCount < history2[yesterday].followersCount) { %>
+                              <span style="color: red;">-<%= (history2[yesterday].followersCount - history2[date].followersCount).toLocaleString('en-us') %></span>
+                              <% } else { %>
+                                <span style="color: grey;">±0</span>
+                                <% } %>
+                              <% } %>
                           <% } %>
                     </td>
                     <td>
                       <% if (history2[date]) { %>
                         <%= (history2[date].postsCount).toLocaleString('en-us') %>
+                        <% if (history2[yesterday]) { %>
+                          <% if (history2[date].postsCount > history2[yesterday].postsCount) { %>
+                            <span style="color: green;">+<%= (history2[date].postsCount - history2[yesterday].postsCount).toLocaleString('en-us') %></span>
+                            <% } else if (history2[date].postsCount < history2[yesterday].postsCount) { %>
+                              <span style="color: red;">-<%= (history2[yesterday].postsCount - history2[date].postsCount).toLocaleString('en-us') %></span>
+                              <% } else { %>
+                                <span style="color: grey;">±0</span>
+                                <% } %>
+                              <% } %>
                           <% } %>
                     </td>
                     <td>
                       <% if (history2[date]) { %>
                         <%= (history2[date].followsCount).toLocaleString('en-us') %>
+                        <% if (history2[yesterday]) { %>
+                          <% if (history2[date].followsCount > history2[yesterday].followsCount) { %>
+                            <span style="color: green;">+<%= (history2[date].followsCount - history2[yesterday].followsCount).toLocaleString('en-us') %></span>
+                            <% } else if (history2[date].followsCount < history2[yesterday].followsCount) { %>
+                              <span style="color: red;">-<%= (history2[yesterday].followsCount - history2[date].followsCount).toLocaleString('en-us') %></span>
+                              <% } else { %>
+                                <span style="color: grey;">±0</span>
+                                <% } %>
+                              <% } %>
                           <% } %>
                     </td>
                   </tr>

@@ -10,10 +10,10 @@ for (var l = 1; l <= 5; l++) {
         var cc = ""
         if (c < 10) { cc = "0" + c; } else { cc = c; }
         var htmlcard = `<div class="channel_${c} card" id="card_thing_${c}" onclick="goToProfile(${c - 1})">
-      <img src="./images/favicon.ico" class="image" id="img_${c}">
+      <div class="num">${cc}</div>
+       <img src="./images/favicon.ico" class="image" id="img_${c}">
       <div class="name">Loading...</div>
       <div class="count odometer" id="count_${c}">0</div>
-      <div class="rank">${cc}</div>
       </div>`;
         $('.row_' + l).append(htmlcard);
         c += 1;
@@ -32,15 +32,12 @@ function updateData(q, data) {
         }
         $(".channel_" + cnb + " .name").html(data.displayName || data.handle);
         $(".channel_" + cnb + " .count").html(Math.floor(data.followersCount));
-        console.log(data.followersCount, counts[q]);
         if (!(counts[q] == data.followersCount)) {
             if (counts[q] > data.followersCount) {
                 colorSwap(cnb, "#f8d7da");
-                console.log("red");
             };
             if (counts[q] < data.followersCount) {
                 colorSwap(cnb, "#c9e8d0")
-                console.log("green");
             };
             setTimeout(function () { colorSwap(cnb, ""); }, 1000);
         }
@@ -56,18 +53,19 @@ function updateChannels() {
         }
     }).then(data => data.json()).then(data => {
         ids = [];
+        data = data.sort((a, b) => b.followersCount - a.followersCount);
         for (var q = 0; q < 50; q++) {
-            ids.push(data[q][0]);
-            updateData(q, data[q][1]);
+            ids.push(data[q].did);
+            updateData(q, data[q]);
         }
         if (first) {
             setTimeout(function () { $('.loader').fadeOut(); $('.counters').fadeIn(1); }, 1)
             first = false;
-            setInterval(updateChannels, 5000);
         }
     });
 };
 updateChannels();
+setInterval(updateChannels, 5000);
 
 function colorSwap(cnb, color) {
     document.getElementById("card_thing_" + cnb + "").style.backgroundColor = color;

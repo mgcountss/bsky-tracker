@@ -69,7 +69,7 @@ let stats_chart1 = new Highcharts.Chart({
     credits: {
         enabled: true,
         text: 'Bluesky Tracker',
-        href: 'https://bluesky.mgcounts.com'
+        href: 'https://www.bsky-tracker.xyz'
     },
     plotOptions: {
         series: {
@@ -114,7 +114,7 @@ let stats_chart2 = new Highcharts.Chart({
     credits: {
         enabled: true,
         text: 'Bluesky Tracker',
-        href: 'https://bluesky.mgcounts.com'
+        href: 'https://www.bsky-tracker.xyz'
     },
     plotOptions: {
         series: {
@@ -159,7 +159,7 @@ let stats_chart3 = new Highcharts.Chart({
     credits: {
         enabled: true,
         text: 'Bluesky Tracker',
-        href: 'https://bluesky.mgcounts.com'
+        href: 'https://www.bsky-tracker.xyz'
     },
     plotOptions: {
         series: {
@@ -193,7 +193,7 @@ for (let i = 0; i < Object.keys(daily_stats).length; i++) {
 dataget = document.URL.includes('?live=followersCount') ? 'followersCount' : document.URL.includes('?live=followsCount') ? 'followsCount' : 'postsCount';
 if (document.URL.includes('?live=followersCount')) {
     document.getElementById('live_label').innerText = 'Followers';
-    updateInterval = setInterval(updateLive, 2000);
+    updateInterval = setInterval(updateLive, 10000);
     updateLive();
     chart.yAxis[0].update({
         title: {
@@ -206,7 +206,7 @@ if (document.URL.includes('?live=followersCount')) {
     document.getElementById('liveCounter').style.display = 'block';
 } else if (document.URL.includes('?live=followsCount')) {
     document.getElementById('live_label').innerText = 'Following';
-    updateInterval = setInterval(updateLive, 2000);
+    updateInterval = setInterval(updateLive, 10000);
     updateLive();
     chart.yAxis[0].update({
         title: {
@@ -219,7 +219,7 @@ if (document.URL.includes('?live=followersCount')) {
     document.getElementById('liveCounter').style.display = 'block';
 } else if (document.URL.includes('?live=postsCount')) {
     document.getElementById('live_label').innerText = 'Posts';
-    updateInterval = setInterval(updateLive, 2000);
+    updateInterval = setInterval(updateLive, 10000);
     updateLive();
     chart.yAxis[0].update({
         title: {

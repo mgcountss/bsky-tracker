@@ -41,14 +41,11 @@ async function getUser(id) {
 }
 
 router.post('/', async (req, res) => {
+    if (req.body.name) {
+        req.body.id = db.get(req.body.name);
+    }
     if (req.body.id) {
         await getUser(req.body.id).then(data => {
-            let code = data.code;
-            delete data.code;
-            res.status(code).send(data);
-        });
-    } else if (req.body.name) {
-        await getUserFromName(req.body.name).then(data => {
             let code = data.code;
             delete data.code;
             res.status(code).send(data);

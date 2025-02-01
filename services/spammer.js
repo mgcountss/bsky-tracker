@@ -13,7 +13,7 @@ const randomStringGenerator = (length) => {
 
 let num = 0;
 while (num < 100) {
-  fetch("https://bluesky.mgcounts.com/api/search", {
+  fetch("https://www.bsky-tracker.xyz/api/search", {
     "headers": {
       "accept": "*/*",
       "accept-language": "en-US,en;q=0.6",
@@ -29,7 +29,7 @@ while (num < 100) {
       "sec-fetch-site": "same-origin",
       "sec-gpc": "1"
     },
-    "referrer": "https://bluesky.mgcounts.com/",
+    "referrer": "https://www.bsky-tracker.xyz/",
     "referrerPolicy": "strict-origin-when-cross-origin",
     "body": `{"search_text":"${randomStringGenerator(3)}"}`,
     "method": "POST",

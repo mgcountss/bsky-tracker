@@ -1,70 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <%- include('partials/meta', {url: url}) %>
 
 <body>
   <%- include('partials/navbar') %>
-    <center>
-      <div class="main">
-        <div class="side1">
-          <div class="search">
-            <div class="holder" id="holder">Search for a user
-              <span class="darker">(use @ to skip the search)</span>
-            </div>
-            <input type="text" id="searchBar" autocomplete="off" aria-autocomplete="none">
-            <br><br><button id="searchButton">Search!</button>
+  <center>
+    <div class="main">
+      <div class="side1">
+        <div class="search">
+          <div class="holder" id="holder">Search for a user
+            <span class="darker">(use @ to skip the search)</span>
           </div>
-          <div class="results" id="results"></div>
-          <div class="error" id="error"></div>
-          <div class="loader" id="loading"></div><br>
-          <hr>
-          <div class="results">
-            <% channels.forEach(function(channel) { %>
-              <div class="result" onclick="window.location.href = '/user/<%= channel.did %>'">
-                <div class="background-image"
-                  style="background: url('<%= channel.banner ? channel.banner : channel.avatar%>') no-repeat center center; background-size: cover;">
-                </div>
-                <div class="overlay">
-                  <h1 class="overlay-label">
-                    <%= channel.displayName.length == 0 ? '@'+channel.handle : channel.displayName %>
-                  </h1>
-                  <hr>
-                  <h4 class="overlay-label">@<%= channel.handle %></h4>
-                  <h2 class="overlay-label">
-                    <%= channel[channel.thing].toLocaleString('en-us') %>
-                      <%=channel.thing_label%>
-                  </h2>
-                  <h3 class="overlay-label">Joined: <%= moment(channel.createdAt).format('MMMM Do, YYYY') %></h3>
-                  <div class="overlay-label" style="margin-top: -1.25rem; display: flex; align-items: center; gap: 0.25rem;">
-                    <img class="pfp" src="<%= channel.avatar %>">
-                    <h4>(<%=channel.label%>)</h4>
-                  </div>
+          <input type="text" id="searchBar" autocomplete="off" aria-autocomplete="none">
+          <br><br><button id="searchButton">Search!</button>
+        </div>
+        <div class="results" id="results"></div>
+        <div class="error" id="error"></div>
+        <div class="loader" id="loading"></div><br>
+        <hr>
+        <div class="adsense">
+          <!-- coming soon -->
+        </div>
+        <hr>
+        <div class="results">
+          <% channels.forEach(function(channel) { %>
+            <a href="/user/<%= channel.did %>">
+            <div class="result">
+              <div class="background-image"
+                style="background: url('<%= channel.banner ? channel.banner : channel.avatar%>') no-repeat center center; background-size: cover;">
+              </div>
+              <div class="overlay">
+                <h1 class="overlay-label">
+                  <%= channel.displayName.length == 0 ? '@'+channel.handle : channel.displayName %>
+                </h1>
+                <hr>
+                <h4 class="overlay-label">@<%= channel.handle %></h4>
+                <h2 class="overlay-label">
+                  <%= channel[channel.thing].toLocaleString('en-us') %>
+                    <%=channel.thing_label%>
+                </h2>
+                <h3 class="overlay-label">Joined: <%= moment(channel.createdAt).format('MMMM Do, YYYY') %></h3>
+                <div class="overlay-label" style="margin-top: -1.25rem; display: flex; align-items: center; gap: 0.25rem;">
+                  <img class="pfp" src="<%= channel.avatar %>">
+                  <h4>(<%=channel.label%>)</h4>
                 </div>
               </div>
-              <% }); %>
-          </div>
-        </div>
-        <div class="side2">
-          <h1 id="title">Bluesky Tracker</h1>
-          <h2 id="subtitle">The best site for tracking user statistics on bsky.app!</h2>
-          <hr>
-          <button class="viewTopButton" onclick="window.location.href = '/lists/users'">View The Top Users!</button>
-          <br><br>
-          <button class="viewTopButton" onclick="window.location.href = '/compare/search'">Compare Two Users!</button>
-          <br><br>
-          <button class="viewTopButton" onclick="window.location.href = '/top50'">View The Top 50 Live!</button>
-          <br>
-          <hr>
-          <h3 class="h3-title">We Currently Track:</h3>
-            <div>
-              <h1 class="count-thing"><%=channelCount.toLocaleString('en-us')%></h1>
-              <h2 class="label-thing">Bluesky Users</h2>
-            </div><hr>
+            </div>
+            </a>
+          <% }); %>
         </div>
       </div>
-      <script src="/js/moment.js"></script>
-      <script src="/js/index.js"></script>
+      <div class="side2">
+        <h1 id="title">Bluesky Tracker</h1>
+        <h2 id="subtitle">The best site for tracking user statistics on bsky.app!</h2>
+        <hr>
+        <a href="/lists/users"><button class="viewTopButton">View The Top Users!</button></a>
+        <br><br>
+        <a href="/compare/search"><button class="viewTopButton" onclick="window.location.href = '/compare/search'">Compare Two Users!</button></a>
+        <br><br>
+        <a href="/top50"><button class="viewTopButton" onclick="window.location.href = '/top50'">View The Top 50 Live!</button></a>
+        <br>
+        <hr>
+        <h3 class="h3-title">We Currently Track:</h3>
+        <div>
+          <h1 class="count-thing"><%=channelCount.toLocaleString('en-us')%></h1>
+          <h2 class="label-thing">Bluesky Users</h2>
+        </div>
+        <hr>
+        <div class="adsense">
+          <!-- coming soon -->
+        </div>
+      </div>
+    </div>
+    <script src="/js/moment.js"></script>
+    <script src="/js/index.js"></script>
+  </center>
 </body>
 
 </html>

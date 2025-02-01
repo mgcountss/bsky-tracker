@@ -159,7 +159,7 @@ let stats_chart1 = new Highcharts.Chart({
     credits: {
         enabled: true,
         text: 'Bluesky Tracker',
-        href: 'https://bluesky.mgcounts.com'
+        href: 'https://www.bsky-tracker.xyz'
     },
     plotOptions: {
         series: {
@@ -210,7 +210,7 @@ let stats_chart2 = new Highcharts.Chart({
     credits: {
         enabled: true,
         text: 'Bluesky Tracker',
-        href: 'https://bluesky.mgcounts.com'
+        href: 'https://www.bsky-tracker.xyz'
     },
     plotOptions: {
         series: {
@@ -261,7 +261,7 @@ let stats_chart3 = new Highcharts.Chart({
     credits: {
         enabled: true,
         text: 'Bluesky Tracker',
-        href: 'https://bluesky.mgcounts.com'
+        href: 'https://www.bsky-tracker.xyz'
     },
     plotOptions: {
         series: {
@@ -293,7 +293,7 @@ dataget = document.URL.split('?live=')[1];
 if (document.URL.includes('?live=followers')) {
     document.getElementById('live_label1').innerText = 'Followers';
     document.getElementById('live_label2').innerText = 'Followers';
-    updateInterval = setInterval(updateLive, 2000);
+    updateInterval = setInterval(updateLive, 10000);
     updateLive();
     chart1.yAxis[0].update({
         title: {
@@ -317,7 +317,7 @@ if (document.URL.includes('?live=followers')) {
 } else if (document.URL.includes('?live=following')) {
     document.getElementById('live_label1').innerText = 'Following';
     document.getElementById('live_label2').innerText = 'Following';
-    updateInterval = setInterval(updateLive, 2000);
+    updateInterval = setInterval(updateLive, 10000);
     updateLive();
     chart1.yAxis[0].update({
         title: {
@@ -341,7 +341,7 @@ if (document.URL.includes('?live=followers')) {
 } else if (document.URL.includes('?live=posts')) {
     document.getElementById('live_label1').innerText = 'Posts';
     document.getElementById('live_label2').innerText = 'Posts';
-    updateInterval = setInterval(updateLive, 2000);
+    updateInterval = setInterval(updateLive, 10000);
     updateLive();
     chart1.yAxis[0].update({
         title: {

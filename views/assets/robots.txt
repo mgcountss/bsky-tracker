@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bluesky.mgcounts.com/sitemap.xml
+Sitemap: https://www.bsky-tracker.xyz/sitemap.xml
