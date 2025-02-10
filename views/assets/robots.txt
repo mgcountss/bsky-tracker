@@ -1,4 +1,2 @@
 User-agent: *
-Allow: /
-
-Sitemap: https://www.bsky-tracker.xyz/sitemap.xml
+Disallow:

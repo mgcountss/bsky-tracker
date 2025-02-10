@@ -17,7 +17,7 @@ async function updateAllUsers(num) {
             groups.push(group);
         }
         for (let i = 0; i < groups.length; i++) {
-            let response = await fetch(`https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=${groups[i].join("&actors=")}&avoidCache=${Math.random()}`);
+            let response = await fetch(`https://public.api.bsky.app/xrpc/app.bsky.actor.getProfiles?actors=${groups[i].join("&actors=")}&avoidCache1=${Math.random()}`);
             let json = await response.json();
             json.profiles.forEach((profile) => {
                 db.ensure(profile.did, profile);

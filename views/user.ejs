@@ -56,8 +56,8 @@
           </div>
           <hr>
           <div style="display: flex; justify-content: center; width: 75%;">
-            <button id="viewUploads" onclick="window.location.href='https://bsky.app/profile/<%= user.handle %>'">View on Bsky</button>
-            <button id="viewUploads" onclick="window.location.href='/compare/search?start=<%= user.handle %>'">Compare With</button>
+            <button id="viewUploads"><a href="/user/<%= user.did %>">View Profile</a></button>
+            <button id="viewUploads"><a href="/compare/search?start=<%= user.handle %>">Compare With</a></button>
           </div>
           <div id="liveCounter">
             <h1 id="live_name">{name}</h1>
