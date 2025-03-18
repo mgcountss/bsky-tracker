@@ -11,6 +11,14 @@ async function getUser(id) {
             .then(response => response.json())
             .then(async data => {
                 if (data.error) {
+                    if (db.has(id)) {
+                        db.set(id, 'deleted', true);
+                        return {
+                            "user": db.get(id),
+                            "success": true,
+                            "code": 200
+                        }
+                    }
                     return {
                         "error": "user not found",
                         "success": false,

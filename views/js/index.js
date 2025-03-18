@@ -25,7 +25,7 @@ function search() {
                     let channel = data.results[i];
                     let div = document.createElement('div');
                     div.className = 'result2';
-                    div.innerHTML = `<a href="/user/${channel.did}'"><div class="result2">
+                    div.innerHTML = `<a href="/user/${channel.did}"><div class="result2">
                     <div class="background-image2" style="background: url('${channel.avatar}') no-repeat center center; background-size: cover;"></div>
                     <div class="overlay2">
                       <h1 class="overlay-label2">${channel.displayName}</h1><hr>
@@ -98,3 +98,15 @@ document.getElementById('searchBar').addEventListener('blur', function () {
         document.getElementById('holder').style.display = 'block';
     }
 });
+
+function updateHome() {
+    fetch('/api/update', {
+        method: 'POST'
+    }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Home updated successfully!');
+                location.reload();
+            }
+        });
+}

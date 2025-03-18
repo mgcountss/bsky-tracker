@@ -24,9 +24,11 @@ async function updateAllUsers(num) {
             });
         }
     } else {
-        let allUserIds = db.keys({
-            'where': (user) => !user.updated_at || user.updated_at < Date.now() - 24 * 60 * 60 * 1000
-        });
+        let allUserIds = keys([
+            (user) => !user.updated_at || user.updated_at < Date.now() - 24 * 60 * 60 * 1000,
+            (user) => !user.deleted
+        ], db);
+        
         let completed = 0;
         let total = allUserIds.length;
         let groups = [];
@@ -48,6 +50,14 @@ async function updateAllUsers(num) {
             json.profiles.forEach((profile) => {
                 db.ensure(profile.did, profile);
             });
+
+            let returnedUserIds = json.profiles.map(profile => profile.did);
+            groups[i].forEach((userId) => {
+                if (!returnedUserIds.includes(userId)) {
+                    db.set(userId, { deleted: true });
+                }
+            });
+            
             completed += groups[i].length;
             console.log('Updated', completed, 'of', total, 'users');
         }

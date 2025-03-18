@@ -13,6 +13,9 @@
               <div>
                 <h1 id="title">
                   <%= user.displayName.length> 0 ? user.displayName : '@'+user.handle %>
+                  <% if (user.deleted) { %> 
+                    <span class="label" style="color: red;">[Deleted]</span>
+                    <% } %>
                 </h1>
                 <h3>@<%= user.handle %>
                 </h3>
@@ -56,8 +59,8 @@
           </div>
           <hr>
           <div style="display: flex; justify-content: center; width: 75%;">
-            <button id="viewUploads"><a href="/user/<%= user.did %>">View Profile</a></button>
-            <button id="viewUploads"><a href="/compare/search?start=<%= user.handle %>">Compare With</a></button>
+            <a id="viewUploads" href="https://bsky.app/profile/<%= user.handle %>">View Profile</a>
+            <a id="viewUploads" href="/compare/search?start=<%= user.handle %>">Compare With</a>
           </div>
           <div id="liveCounter">
             <h1 id="live_name">{name}</h1>
@@ -93,7 +96,7 @@
                       <%} else if (history[date].followersCount < history[yesterday].followersCount) {%>
                         <span style="color: red;">-<%= (history[yesterday].followersCount - history[date].followersCount).toLocaleString('en-us') %></span>
                         <%} else {%>
-                          <span style="color: grey;">±0</span>
+                          <span style="color: grey;">0</span>
                           <%}%>
                     <%}%>
                 </td>
@@ -105,7 +108,7 @@
                       <%} else if (history[date].postsCount < history[yesterday].postsCount) {%>
                         <span style="color: red;">-<%= (history[yesterday].postsCount - history[date].postsCount).toLocaleString('en-us') %></span>
                         <%} else {%>
-                          <span style="color: grey;">±0</span>
+                          <span style="color: grey;">0</span>
                           <%}%>
                     <%}%>
                 </td>
@@ -117,7 +120,7 @@
                       <%} else if (history[date].followsCount < history[yesterday].followsCount) {%>
                         <span style="color: red;">-<%= (history[yesterday].followsCount - history[date].followsCount).toLocaleString('en-us') %></span>
                         <%} else {%>
-                          <span style="color: grey;">±0</span>
+                          <span style="color: grey;">0</span>
                           <%}%>
                     <%}%>
                 </td>

@@ -2,11 +2,18 @@ import express from 'express';
 import db from '../services/db.js';
 const router = express.Router();
 
-async function getUsers(start, end, sort, order) {
+async function getUsers(start, end, sort, order, removeDaily) {
     try {
-        let data = db.sortData(sort, order, start, end);
+        let newData = db.sortData(sort, order, start, end);
+        newData = [...newData];
+        newData = JSON.parse(JSON.stringify(newData));
+        if (removeDaily) {
+            for (let i = 0; i < newData.length; i++) {
+                delete newData[i][1].daily;
+            }
+        }
         return {
-            "data": data,
+            "data": newData,
             "success": true,
             "code": 200
         };
@@ -56,7 +63,7 @@ router.post('/', async (req, res) => {
         } else {
             if (req.body.type == 'users') {
                 if ((req.body.start || req.body.start == 0) && (req.body.end) && (req.body.sort) && (req.body.order)) {
-                    return await getUsers(req.body.start, req.body.end, req.body.sort, req.body.order).then(data => {
+                    return await getUsers(req.body.start, req.body.end, req.body.sort, req.body.order, true).then(data => {
                         let code = data.code;
                         delete data.code;
                         res.status(code).send(data);

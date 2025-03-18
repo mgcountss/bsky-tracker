@@ -81,6 +81,10 @@ app.get('/ads.txt', (req, res) => {
 let channels = db.getTheChannels();
 let channelCount = db.keys().length;
 
+setInterval(function () {
+    channels = db.getTheChannels();
+}, 60000);
+
 // **Helper function to render pages**
 const renderPage = (res, view, options = {}) => {
     res.render(view, { moment, ...options });
@@ -88,6 +92,11 @@ const renderPage = (res, view, options = {}) => {
 
 // **Home Page**
 app.get('/', (req, res) => renderPage(res, 'index', { channels, channelCount, url: "index" }));
+
+app.post('/api/update', async (req, res) => {
+    channels = db.getTheChannels();
+    res.json({ success: true });
+});
 
 // **User Page**
 app.get('/user/:id', async (req, res) => {

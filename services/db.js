@@ -7,7 +7,7 @@ const get = (id) => {
 };
 
 const has = (id) => {
-    return !!db[id];
+    return db[id] ? true : false;
 };
 
 const calculateAgo = (days) => {
@@ -121,23 +121,30 @@ const ensure = (id, value) => {
 
     if (milestone.happen && milestone.number !== user.lastMilestone) {
         user.lastMilestone = milestone.number;
-        console.log("Milestone detected", milestone.number, user.handle);
+        //console.log("Milestone detected", milestone.number, user.handle);
         // makePost(false, true, milestone.number, user);
     }
 };
 
-const keys = (where) => {
-    if (where) {
+const keys = (wheres) => {
+    if (wheres) {
         let keys = Object.keys(db);
         let newKeys = [];
         for (let i = 0; i < keys.length; i++) {
-            if (where.where(db[keys[i]])) {
+            let user = db[keys[i]];
+            let valid = true;
+            for (let where of wheres) {
+                if (!where(user)) {
+                    valid = false;
+                    break;
+                }
+            }
+            if (valid) {
                 newKeys.push(keys[i]);
             }
         }
         return newKeys;
     } else {
-        const db = JSON.parse(fs.readFileSync("./database/db.json", "utf8"));
         return Object.keys(db);
     }
 };
@@ -161,10 +168,10 @@ const getTheChannels = () => {
         const user = db[key];
         if (!user) continue;
 
-        if (user.followersCount > mostFollowed.followersCount) mostFollowed = user;
-        if (user.postsCount > mostPosts.postsCount) mostPosts = user;
-        if (user.followsCount > mostFollowing.followsCount) mostFollowing = user;
-        if (user.createdAt > newest.createdAt) newest = user;
+        if (user.followersCount > mostFollowed.followersCount && !user.deleted) mostFollowed = user;
+        if (user.postsCount > mostPosts.postsCount && !user.deleted) mostPosts = user;
+        if (user.followsCount > mostFollowing.followsCount && !user.deleted) mostFollowing = user;
+        if (user.createdAt > newest.createdAt && !user.deleted) newest = user;
     }
 
     const random = db[keys[Math.floor(Math.random() * keys.length)]];
@@ -219,13 +226,17 @@ const getAll = () => {
     return db;
 }
 
+const set = (id, key, value) => {
+    db[id][key] = value;
+};
+
 setInterval(() => {
     fs.writeFileSync("./database/db.json", JSON.stringify(db), "utf8");
 }, 600000);
 
 setInterval(() => {
     fs.writeFileSync(`./database/backups/db_backup_${Date.now()}.json`, JSON.stringify(db), "utf8");
-}, 1000 * 60 * 60 * 12);
+}, 1000 * 60 * 60 * 6);
 
 export default {
     get,
@@ -233,6 +244,7 @@ export default {
     ensure,
     keys,
     all,
+    set,
     sortData,
     getTheChannels,
     getAll,

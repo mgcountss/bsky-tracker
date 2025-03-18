@@ -14,6 +14,9 @@
                 <div>
                   <h1 id="title1">
                     <%= user1.displayName %>
+                    <% if (user1.deleted) { %> 
+                      <span class="label" style="color: red;">[Deleted]</span>
+                      <% } %>
                   </h1>
                   <h3>@<%= user1.handle %>
                   </h3>
@@ -59,8 +62,8 @@
             <hr>
             <center>
               <div style="display: flex; justify-content: center; width: 75%;">
-                <button id="viewUploads"><a href="/compare/search?start=<%= user1.handle %>">Compare With</a></button>
-                <button id="viewUploads"><a href="/user/<%= user1.did %>">View Profile</a></button>
+                <a id="viewUploads" href="/compare/search?start=<%= user1.handle %>">Compare With</a>
+                <a id="viewUploads" href="https://bsky.app/profile/<%= user1.handle %>">View Profile</a>
               </div>
             </center>
             <div id="liveCounter1">
@@ -77,6 +80,9 @@
                 <div>
                   <h1 id="title2">
                     <%= user2.displayName %>
+                    <% if (user2.deleted) { %> 
+                      <span class="label" style="color: red;">[Deleted]</span>
+                      <% } %>
                   </h1>
                   <h3>@<%= user2.handle %>
                   </h3>
@@ -122,8 +128,8 @@
             <hr>
             <center>
               <div style="display: flex; justify-content: center; width: 75%;">
-                <button id="viewUploads"><a href="/user/<%= user2.did %>">View Profile</a></button>
-                <button id="viewUploads"><a href="/compare/search?start=<%= user2.handle %>">Compare With</a></button>
+                <a id="viewUploads" href="https://bsky.app/profile/<%= user2.handle %>">View Profile</a>
+                <a id="viewUploads" href="/compare/search?start=<%= user2.handle %>">Compare With</a>
               </div>
             </center>
             <div id="liveCounter2">
@@ -193,7 +199,7 @@
                                       <span style="color: red;">-<%= (history1[yesterday].followersCount -
                                           history1[date].followersCount).toLocaleString('en-us') %></span>
                                       <% } else { %>
-                                        <span style="color: grey;">±0</span>
+                                        <span style="color: grey;">0</span>
                                         <% } %>
                                           <% } %>
                                             <% } %>
@@ -209,7 +215,7 @@
                                       <span style="color: red;">-<%= (history1[yesterday].postsCount -
                                           history1[date].postsCount).toLocaleString('en-us') %></span>
                                       <% } else { %>
-                                        <span style="color: grey;">±0</span>
+                                        <span style="color: grey;">0</span>
                                         <% } %>
                                           <% } %>
                                             <% } %>
@@ -225,7 +231,7 @@
                                       <span style="color: red;">-<%= (history1[yesterday].followsCount -
                                           history1[date].followsCount).toLocaleString('en-us') %></span>
                                       <% } else { %>
-                                        <span style="color: grey;">±0</span>
+                                        <span style="color: grey;">0</span>
                                         <% } %>
                                           <% } %>
                                             <% } %>
@@ -243,7 +249,7 @@
                                       <span style="color: red;">-<%= (history2[yesterday].followersCount -
                                           history2[date].followersCount).toLocaleString('en-us') %></span>
                                       <% } else { %>
-                                        <span style="color: grey;">±0</span>
+                                        <span style="color: grey;">0</span>
                                         <% } %>
                                           <% } %>
                                             <% } %>
@@ -259,7 +265,7 @@
                                       <span style="color: red;">-<%= (history2[yesterday].postsCount -
                                           history2[date].postsCount).toLocaleString('en-us') %></span>
                                       <% } else { %>
-                                        <span style="color: grey;">±0</span>
+                                        <span style="color: grey;">0</span>
                                         <% } %>
                                           <% } %>
                                             <% } %>
@@ -275,7 +281,7 @@
                                       <span style="color: red;">-<%= (history2[yesterday].followsCount -
                                           history2[date].followsCount).toLocaleString('en-us') %></span>
                                       <% } else { %>
-                                        <span style="color: grey;">±0</span>
+                                        <span style="color: grey;">0</span>
                                         <% } %>
                                           <% } %>
                                             <% } %>
